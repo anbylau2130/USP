@@ -60,3 +60,5 @@ InnerException:The Entity Framework provider type 'System.Data.Entity.SqlServer.
 2016-05-27 17:03:40,780 DEBUG USP.Controllers.UserController
 2016-05-27 17:04:40,736 DEBUG USP.Controllers.UserController
 2016-05-27 17:05:50,362 DEBUG USP.Controllers.UserController
+2016-05-27 17:06:40,692 DEBUG USP.Controllers.UserController
+2016-05-27 17:07:48,955 DEBUG USP.Controllers.UserController
