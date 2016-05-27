@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="K3CloudModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="T_BD_SUPPLIER">
+    <Key>
+      <PropertyRef Name="FSUPPLIERID" />
+    </Key>
+    <Property Name="FSUPPLIERID" Type="Int32" Nullable="false" />
+    <Property Name="FMASTERID" Type="Int32" Nullable="false" />
+    <Property Name="FCREATEORGID" Type="Int32" Nullable="false" />
+    <Property Name="FUSEORGID" Type="Int32" Nullable="false" />
+    <Property Name="FCREATORID" Type="Int32" Nullable="false" />
+    <Property Name="FCREATEDATE" Type="DateTime" Precision="3" />
+    <Property Name="FMODIFIERID" Type="Int32" Nullable="false" />
+    <Property Name="FMODIFYDATE" Type="DateTime" Precision="3" />
+    <Property Name="FDOCUMENTSTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="FFORBIDSTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="FAUDITORID" Type="Int32" Nullable="false" />
+    <Property Name="FAUDITDATE" Type="DateTime" Precision="3" />
+    <Property Name="FFORBIDERID" Type="Int32" Nullable="false" />
+    <Property Name="FFORBIDDATE" Type="DateTime" Precision="3" />
+    <Property Name="FNUMBER" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FSHORTNUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FPRIMARYGROUP" Type="Int32" />
+    <Property Name="FCORRESPONDORGID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_BD_SUPPLIER_L">
+    <Key>
+      <PropertyRef Name="FPKID" />
+    </Key>
+    <Property Name="FPKID" Type="Int32" Nullable="false" />
+    <Property Name="FSUPPLIERID" Type="Int32" Nullable="false" />
+    <Property Name="FLOCALEID" Type="Int32" Nullable="false" />
+    <Property Name="FNAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FSHORTNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FDESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_BD_SUPPLIERGROUP">
+    <Key>
+      <PropertyRef Name="FID" />
+    </Key>
+    <Property Name="FID" Type="Int32" Nullable="false" />
+    <Property Name="FNUMBER" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FGROUPID" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FPARENTID" Type="Int32" Nullable="false" />
+    <Property Name="FFULLPARENTID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FLEFT" Type="Int32" Nullable="false" />
+    <Property Name="FRIGHT" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="T_BD_SUPPLIERGROUP_L">
+    <Key>
+      <PropertyRef Name="FPKID" />
+    </Key>
+    <Property Name="FPKID" Type="Int32" Nullable="false" />
+    <Property Name="FID" Type="Int32" Nullable="false" />
+    <Property Name="FLOCALEID" Type="Int32" Nullable="false" />
+    <Property Name="FNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FDESCRIPTION" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="K3CloudEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="T_BD_SUPPLIER" EntityType="Self.T_BD_SUPPLIER" />
+    <EntitySet Name="T_BD_SUPPLIER_L" EntityType="Self.T_BD_SUPPLIER_L" />
+    <EntitySet Name="T_BD_SUPPLIERGROUP" EntityType="Self.T_BD_SUPPLIERGROUP" />
+    <EntitySet Name="T_BD_SUPPLIERGROUP_L" EntityType="Self.T_BD_SUPPLIERGROUP_L" />
+  </EntityContainer>
+</Schema>

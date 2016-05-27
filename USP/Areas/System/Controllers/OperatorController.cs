@@ -194,6 +194,9 @@ namespace USP.Areas.System.Controllers
                 model.ID = operators.ID;
                 model.LoginName = operators.LoginName;
                 model.RealName = operators.RealName;
+                model.Email = operators.Email;
+                model.Mobile = operators.Mobile;
+                model.IdCard = operators.IdCard;
                 return View(model);
             }
             else
@@ -216,22 +219,15 @@ namespace USP.Areas.System.Controllers
             {
                 RedirectToAction("Index", "Operator");
             }
-            //if (model.LoginName.Trim() != operators.LoginName.Trim())
-            //{
-            //    if (operatorBll.GetOperatorbyLoginName(model.LoginName.Trim()) != null)
-            //    {
-            //        ModelState.AddModelError("Name", "登录名已存在");
-            //        return View(model);
-            //    }
-            //}
-            if (!operatorBll.EditOperator(model))
+            var result = operatorBll.EditOperator(model);
+            if (!result.IsSuccess)
             {
                 TempData["returnMsgType"] = "error";
-                TempData["returnMsg"] = "修改失败";
+                TempData["returnMsg"] = result.ProcMsg;
                 return View(model);
             }
             TempData["resultMsgType"] = "success";
-            TempData["resultMsg"] = "修改成功";
+            TempData["resultMsg"] = result.ProcMsg;
             return RedirectToAction("Index");
             //}
             //return View();

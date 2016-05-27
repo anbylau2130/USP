@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="K3CloudModelStoreContainer" CdmEntityContainer="K3CloudEntities">
+    <EntitySetMapping Name="T_BD_SUPPLIER">
+      <EntityTypeMapping TypeName="K3CloudModel.T_BD_SUPPLIER">
+        <MappingFragment StoreEntitySet="T_BD_SUPPLIER">
+          <ScalarProperty Name="FSUPPLIERID" ColumnName="FSUPPLIERID" />
+          <ScalarProperty Name="FMASTERID" ColumnName="FMASTERID" />
+          <ScalarProperty Name="FCREATEORGID" ColumnName="FCREATEORGID" />
+          <ScalarProperty Name="FUSEORGID" ColumnName="FUSEORGID" />
+          <ScalarProperty Name="FCREATORID" ColumnName="FCREATORID" />
+          <ScalarProperty Name="FCREATEDATE" ColumnName="FCREATEDATE" />
+          <ScalarProperty Name="FMODIFIERID" ColumnName="FMODIFIERID" />
+          <ScalarProperty Name="FMODIFYDATE" ColumnName="FMODIFYDATE" />
+          <ScalarProperty Name="FDOCUMENTSTATUS" ColumnName="FDOCUMENTSTATUS" />
+          <ScalarProperty Name="FFORBIDSTATUS" ColumnName="FFORBIDSTATUS" />
+          <ScalarProperty Name="FAUDITORID" ColumnName="FAUDITORID" />
+          <ScalarProperty Name="FAUDITDATE" ColumnName="FAUDITDATE" />
+          <ScalarProperty Name="FFORBIDERID" ColumnName="FFORBIDERID" />
+          <ScalarProperty Name="FFORBIDDATE" ColumnName="FFORBIDDATE" />
+          <ScalarProperty Name="FNUMBER" ColumnName="FNUMBER" />
+          <ScalarProperty Name="FSHORTNUMBER" ColumnName="FSHORTNUMBER" />
+          <ScalarProperty Name="FPRIMARYGROUP" ColumnName="FPRIMARYGROUP" />
+          <ScalarProperty Name="FCORRESPONDORGID" ColumnName="FCORRESPONDORGID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_BD_SUPPLIER_L">
+      <EntityTypeMapping TypeName="K3CloudModel.T_BD_SUPPLIER_L">
+        <MappingFragment StoreEntitySet="T_BD_SUPPLIER_L">
+          <ScalarProperty Name="FPKID" ColumnName="FPKID" />
+          <ScalarProperty Name="FSUPPLIERID" ColumnName="FSUPPLIERID" />
+          <ScalarProperty Name="FLOCALEID" ColumnName="FLOCALEID" />
+          <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+          <ScalarProperty Name="FSHORTNAME" ColumnName="FSHORTNAME" />
+          <ScalarProperty Name="FDESCRIPTION" ColumnName="FDESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_BD_SUPPLIERGROUP">
+      <EntityTypeMapping TypeName="K3CloudModel.T_BD_SUPPLIERGROUP">
+        <MappingFragment StoreEntitySet="T_BD_SUPPLIERGROUP">
+          <ScalarProperty Name="FID" ColumnName="FID" />
+          <ScalarProperty Name="FNUMBER" ColumnName="FNUMBER" />
+          <ScalarProperty Name="FGROUPID" ColumnName="FGROUPID" />
+          <ScalarProperty Name="FPARENTID" ColumnName="FPARENTID" />
+          <ScalarProperty Name="FFULLPARENTID" ColumnName="FFULLPARENTID" />
+          <ScalarProperty Name="FLEFT" ColumnName="FLEFT" />
+          <ScalarProperty Name="FRIGHT" ColumnName="FRIGHT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="T_BD_SUPPLIERGROUP_L">
+      <EntityTypeMapping TypeName="K3CloudModel.T_BD_SUPPLIERGROUP_L">
+        <MappingFragment StoreEntitySet="T_BD_SUPPLIERGROUP_L">
+          <ScalarProperty Name="FPKID" ColumnName="FPKID" />
+          <ScalarProperty Name="FID" ColumnName="FID" />
+          <ScalarProperty Name="FLOCALEID" ColumnName="FLOCALEID" />
+          <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+          <ScalarProperty Name="FDESCRIPTION" ColumnName="FDESCRIPTION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

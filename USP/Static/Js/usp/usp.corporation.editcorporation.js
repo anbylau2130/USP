@@ -5,9 +5,11 @@
             $(".datepicker").datetimepicker({
                 format: 'YYYY-MM-DD'
             });
-           // usp.corporation.editCorporation.eventInit.btnReturnInit(btnReturnId, basePage);
-           // usp.corporation.editCorporation.eventInit.provinceChange(areaId, areaUrl, provinceId, countyId);
-            //usp.corporation.editCorporation.eventInit.areaChange(countyId, countyUrl, areaId);
+
+            usp.corporation.editCorporation.eventInit.btnReturnInit(btnReturnId, basePage);
+            //usp.corporation.editCorporation.eventInit.provinceChange(provinceId, provinceUrl);
+            usp.corporation.editCorporation.eventInit.provinceChange(areaId, areaUrl, provinceId, countyId);
+            usp.corporation.editCorporation.eventInit.areaChange(countyId, countyUrl, areaId);
         },
         eventInit: {
             btnReturnInit: function (id, basePage) {
@@ -50,6 +52,7 @@
                         }
                     });
                 });
+
             }
         }
     }

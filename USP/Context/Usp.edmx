@@ -13,7 +13,7 @@
             
             <PropertyRef Name="Code" />
           </Key>
-          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Parent" Type="varchar" MaxLength="20" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
@@ -880,6 +880,16 @@
           <Parameter Name="Parameter" Type="varchar" Mode="In" />
           <Parameter Name="Url" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="UP_EditOperator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="bigint" Mode="In" />
+          <Parameter Name="loginName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="RealName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Creator" Type="bigint" Mode="In" />
+          <Parameter Name="Role" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Mobile" Type="varchar(max)" Mode="In" />
+          <Parameter Name="IdCard" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="UP_EditRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RoleID" Type="bigint" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -900,6 +910,9 @@
         </Function>
         <Function Name="UP_GetOperatorPrivilege" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Operator" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="UP_GetOperatorRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="operator" Type="bigint" Mode="In" />
         </Function>
         <Function Name="UP_GetRoleByOperator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Operator" Type="bigint" Mode="In" />
@@ -926,6 +939,9 @@
           <Parameter Name="PageSize" Type="int" Mode="In" />
           <Parameter Name="strOrder" Type="varchar(max)" Mode="In" />
           <Parameter Name="strOrderType" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UP_ShowCity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Province" Type="char" Mode="In" />
         </Function>
         <Function Name="UP_ShowCorp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PageIndex" Type="int" Mode="In" />
@@ -1316,19 +1332,18 @@
             <Parameter Name="creator" Mode="In" Type="Int64" />
             <Parameter Name="type" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UP_EnableCorp1" ReturnType="Collection(String)">
-            <Parameter Name="Corp" Mode="In" Type="Int64" />
-            <Parameter Name="Operator" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="UP_GetOperatorRole" EntitySet="SysRole" ReturnType="Collection(UspModel.SysRole)">
-          <Parameter Name="Operator" Mode="In" Type="Int64" />
+          <Parameter Name="operator" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="UP_EditOperator" ReturnType="Collection(Int64)">
+          <FunctionImport Name="UP_EditOperator" ReturnType="Collection(String)">
             <Parameter Name="id" Mode="In" Type="Int64" />
-            <Parameter Name="LoginName" Mode="In" Type="String" />
+            <Parameter Name="loginName" Mode="In" Type="String" />
             <Parameter Name="RealName" Mode="In" Type="String" />
             <Parameter Name="Creator" Mode="In" Type="Int64" />
             <Parameter Name="Role" Mode="In" Type="String" />
+            <Parameter Name="Mobile" Mode="In" Type="String" />
+            <Parameter Name="IdCard" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="UP_AuditorPrivilegeTemplate">
             <Parameter Name="CorpType" Mode="In" Type="Int64" />
@@ -3132,7 +3147,6 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="UP_AuditorCorp1" FunctionName="UspModel.Store.UP_AuditorCorp" />
           <FunctionImportMapping FunctionImportName="UP_CancelCorp1" FunctionName="UspModel.Store.UP_CancelCorp" />
-          <FunctionImportMapping FunctionImportName="UP_EnableCorp1" FunctionName="UspModel.Store.UP_EnableCorp" />
           <FunctionImportMapping FunctionImportName="UP_AuditorPrivilegeTemplate" FunctionName="UspModel.Store.UP_AuditorPrivilegeTemplate" />
           <FunctionImportMapping FunctionImportName="UP_ShowCorp" FunctionName="UspModel.Store.UP_ShowCorp">
             <ResultMapping>
@@ -3186,6 +3200,22 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_ShowCity" FunctionName="UspModel.Store.UP_ShowCity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UspModel.UP_ShowCity_Result">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WeatherCode" ColumnName="WeatherCode" />
+                <ScalarProperty Name="LocationX" ColumnName="LocationX" />
+                <ScalarProperty Name="LocationY" ColumnName="LocationY" />
+                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_GetOperatorRole" FunctionName="UspModel.Store.UP_GetOperatorRole" />
+          <FunctionImportMapping FunctionImportName="UP_EditOperator" FunctionName="UspModel.Store.UP_EditOperator" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

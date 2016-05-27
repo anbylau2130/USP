@@ -16,6 +16,6 @@ namespace USP.Dal
         int AlterPassword(long opid, string newPassword);
         SysOperator GetOperatorbyLoginName(string name);
         List<SysRole> GetRolesByOperator(long? opid);
-        bool EditOperator(long iD, string loginName, string realName, string role, long creator);
+        ProcResult EditOperator(OperaterAddEdit model);
     }
 }

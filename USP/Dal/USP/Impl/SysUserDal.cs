@@ -139,7 +139,7 @@ namespace USP.Dal.Impl
             }
         }
 
-        public bool EditOperator(long iD, string loginName, string realName, string role, long creator)
+        public ProcResult EditOperator(OperaterAddEdit model)
         {
             try
             {
@@ -150,16 +150,20 @@ namespace USP.Dal.Impl
                 //    return true;
                 //}
                 //return false;
-                var obj = db.UP_EditOperator(iD, loginName, realName, creator, role);
-                var bank = obj.FirstOrDefault();
-                if (bank == null) return false;
-                return true;
+                var result = db.UP_EditOperator(model.ID, model.LoginName,model.RealName, model.Creator, model.Role,model.Mobile,model.IdCard,model.Email).FirstOrDefault();
+
+                return new ProcResult()
+                {
+                    IsSuccess = result.Split('|')[0] == "true",
+                    ProcMsg = result.Split('|')[1]
+                };
             }
             catch (Exception ex)
             {
                 LogUtil.Exception("ExceptionLogger", ex);
-                return false;
+                return new ProcResult();
             }
         }
+
     }
 }

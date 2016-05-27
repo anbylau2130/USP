@@ -264,10 +264,8 @@ GO
 --alter column IdCard varchar(32)
 
 --GO
-
-
-            
-create proc [dbo].[UP_AddCorp]              
+       
+ALTER proc [dbo].[UP_AddCorp]              
    @CorpName varchar(100),              
    @CorpType bigint,    
    @Operator bigint,     
@@ -338,7 +336,7 @@ BEGIN
             '110000', '', 0,              
             @CorpType, 0, 0,              
             '', '', @Operator,              
-            @datetime, null, null,              
+            @datetime, 0, GETDATE(),              
             null, null              
            );       
           select @SysCorpID=SCOPE_IDENTITY() from SysCorp    
@@ -375,7 +373,7 @@ BEGIN
                 null, null, 0,              
                 0, null, null,              
                 '', '', @Operator,              
-                @datetime, null, null,              
+                @datetime, 0, GETDATE(),              
                 null, null              
               );      
           select @SysOperatorID=SCOPE_IDENTITY() from  SysOperator           
@@ -391,7 +389,7 @@ BEGIN
           values (              
               @SysCorpID, 'administrators', 1,              
               null, null, @Operator,              
-              @datetime, null, null,              
+              @datetime, 0, GETDATE(),              
               null, null              
            );              
             
@@ -411,7 +409,7 @@ BEGIN
           )  select              
           @SysRoleID,Menu,null,  
           null,@Operator,@datetime,  
-          null,null,null,  
+          0,GETDATE(),null,  
           null from SysMenuTemplate where CorpType=@CorpType
           
           --添加操作权限
@@ -430,12 +428,16 @@ BEGIN
   
    select @IsSuccess+'|'+@ProcMsg as Result                 
 end 
-GO
+go
 
 
+create PROC [dbo].[UP_GetOperatorRole]
+@operator BIGINT
+AS
 
+SELECT *FROM SysRole WHERE ID IN( SELECT Role FROM  SysRoleOperator WHERE Operator=@operator)
       
-                    
+ go                   
 create proc [dbo].[UP_AddPrivilegeTemplate]                   
    @CorpType bigint,                 
    @Privileges nvarchar(500),            
@@ -1380,3 +1382,58 @@ begin
     end	
 end
 GO
+
+
+
+CREATE  proc UP_EditOperator
+@id BIGINT,
+@loginName VARCHAR(max),
+@RealName VARCHAR(max),
+@Creator BIGINT,
+@Role VARCHAR(max),
+@Mobile varchar(max),
+@IdCard varchar(max),
+@Email varchar(max)
+AS
+DECLARE @sqlstr VARCHAR(MAX)
+declare  @IsSuccess  varchar(50)='true'         
+declare  @ProcMsg varchar(500) ='修改成功'    
+--用户不存在返回
+if not exists(select 1 from dbo.SysOperator where ID=@id)
+begin
+		 SET @IsSuccess='false'              
+		 set @ProcMsg='不存在对应的员工'  
+		 select @IsSuccess+'|' +@ProcMsg
+		 return  
+END
+	begin tran tranEditRole
+	
+	begin try 
+
+			DELETE FROM SysRoleOperator WHERE Operator=@id
+
+			UPDATE  SysOperator 
+			SET loginName= @loginName,
+			RealName =@RealName,
+			Creator=@Creator,
+			Mobile=@Mobile,
+			IdCard =@IdCard,
+			Email=@Email
+			WHERE ID=@id
+			SET @sqlstr='
+			 INSERT INTO SysRoleOperator
+			 (Role,Operator,creator,CreateTime,Auditor,AuditTime)
+			 SELECT ID,'+CONVERT(VARCHAR,@id)+','+CONVERT(VARCHAR,@Creator)+',GETDATE(),'+CONVERT(VARCHAR,@Creator)+',GETDATE() FROM SysRole 
+			 WHERE ID IN ('+@Role+')
+			 '
+		EXEC(@sqlstr)
+	commit tran tranEditRole --没有异常，提交事务
+	end try
+	
+	begin CATCH
+		SET  @IsSuccess='false' 
+		SET  @ProcMsg= ERROR_MESSAGE() 
+		rollback tran tranEditRole --执行出错，回滚事务
+	end catch 	
+
+	SELECT @IsSuccess+'|'+@ProcMsg as Result

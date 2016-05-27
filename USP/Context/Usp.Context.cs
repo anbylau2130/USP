@@ -944,24 +944,11 @@ namespace USP.Context
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("UP_EditBank", idParameter, numberParameter, nameParameter, niceNameParameter, shortNameParameter, remarkParameter, urlParameter, creatorParameter, typeParameter);
         }
     
-        public virtual ObjectResult<string> UP_EnableCorp1(Nullable<long> corp, Nullable<long> @operator)
-        {
-            var corpParameter = corp.HasValue ?
-                new ObjectParameter("Corp", corp) :
-                new ObjectParameter("Corp", typeof(long));
-    
-            var operatorParameter = @operator.HasValue ?
-                new ObjectParameter("Operator", @operator) :
-                new ObjectParameter("Operator", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_EnableCorp1", corpParameter, operatorParameter);
-        }
-    
         public virtual ObjectResult<SysRole> UP_GetOperatorRole(Nullable<long> @operator)
         {
             var operatorParameter = @operator.HasValue ?
-                new ObjectParameter("Operator", @operator) :
-                new ObjectParameter("Operator", typeof(long));
+                new ObjectParameter("operator", @operator) :
+                new ObjectParameter("operator", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SysRole>("UP_GetOperatorRole", operatorParameter);
         }
@@ -969,21 +956,21 @@ namespace USP.Context
         public virtual ObjectResult<SysRole> UP_GetOperatorRole(Nullable<long> @operator, MergeOption mergeOption)
         {
             var operatorParameter = @operator.HasValue ?
-                new ObjectParameter("Operator", @operator) :
-                new ObjectParameter("Operator", typeof(long));
+                new ObjectParameter("operator", @operator) :
+                new ObjectParameter("operator", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SysRole>("UP_GetOperatorRole", mergeOption, operatorParameter);
         }
     
-        public virtual ObjectResult<Nullable<long>> UP_EditOperator(Nullable<long> id, string loginName, string realName, Nullable<long> creator, string role)
+        public virtual ObjectResult<string> UP_EditOperator(Nullable<long> id, string loginName, string realName, Nullable<long> creator, string role, string mobile, string idCard, string email)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(long));
     
             var loginNameParameter = loginName != null ?
-                new ObjectParameter("LoginName", loginName) :
-                new ObjectParameter("LoginName", typeof(string));
+                new ObjectParameter("loginName", loginName) :
+                new ObjectParameter("loginName", typeof(string));
     
             var realNameParameter = realName != null ?
                 new ObjectParameter("RealName", realName) :
@@ -997,7 +984,19 @@ namespace USP.Context
                 new ObjectParameter("Role", role) :
                 new ObjectParameter("Role", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("UP_EditOperator", idParameter, loginNameParameter, realNameParameter, creatorParameter, roleParameter);
+            var mobileParameter = mobile != null ?
+                new ObjectParameter("Mobile", mobile) :
+                new ObjectParameter("Mobile", typeof(string));
+    
+            var idCardParameter = idCard != null ?
+                new ObjectParameter("IdCard", idCard) :
+                new ObjectParameter("IdCard", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_EditOperator", idParameter, loginNameParameter, realNameParameter, creatorParameter, roleParameter, mobileParameter, idCardParameter, emailParameter);
         }
     
         public virtual int UP_AuditorPrivilegeTemplate(Nullable<long> corpType, string privileges, Nullable<long> auditor)

@@ -29,6 +29,6 @@ namespace USP.Bll
         int AlterPassword(long opid, string newPassword);
         SysOperator GetOperatorbyLoginName(string name);
         List<TreeNode> GetUserRoleTree(long corp, long? opid);
-        bool EditOperator(OperaterAddEdit model);
+        ProcResult EditOperator(OperaterAddEdit model);
     }
 }

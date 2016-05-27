@@ -128,10 +128,9 @@ namespace USP.Areas.System.Controllers
             ViewData["FeeTypeList"] = dropDownListService.InitCorpFeeTypeDropDownList();
             ViewData["GradeList"] = dropDownListService.InitSysCorpGradeDropDownList();
             ViewData["VocationList"] = dropDownListService.InitVocationDropDownList();
-            ViewBag.Province = model.Province;
-            ViewBag.Area = model.Area;
-            ViewBag.County = model.County;
-            ViewBag.Community = model.Community;
+            ViewData["ProvinceList"] = dropDownListService.InitProvinceDropDownList();
+            ViewData["AreaList"] = dropDownListService.InitCityDropDownList(model.Province);
+            ViewData["CountyList"] = dropDownListService.InitCountyDropDownList(model.Area);
             return View(model);
         }
 
@@ -143,69 +142,24 @@ namespace USP.Areas.System.Controllers
             corp.CreateTime = DateTime.Now;
             corp.Auditor = null;
             corp.AuditTime = null;
-            ViewData["CorpTypeList"] = dropDownListService.InitCorpTypeDropDownList();
-            ViewData["FeeTypeList"] = dropDownListService.InitCorpFeeTypeDropDownList();
-            ViewData["GradeList"] = dropDownListService.InitSysCorpGradeDropDownList();
-            ViewData["VocationList"] = dropDownListService.InitVocationDropDownList();
-            ViewBag.Province = corp.Province;
-            ViewBag.Area = corp.Area;
-            ViewBag.County = corp.County;
-            ViewBag.Community = corp.Community;
-            ////上传公司图标
-            HttpPostedFileBase file1 = Request.Files["IconUpload"];
-            if (corp.LogoIcon == null && file1.FileName == "")
-            {
-                ModelState.AddModelError("iconerror", "请选择公司图标");
-                return View(corp);
-            }
-            if (file1.FileName != "")
-            {
-                try
-                {
-                    var filename = Path.Combine(Request.MapPath("~/Upload"), file1.FileName);
-                    file1.SaveAs(filename);
-                    corp.LogoIcon = "/Upload/" + file1.FileName;
-                }
-                catch (Exception ex)
-                {
-                    return Content(string.Format("上传文件出现异常：{0}", ex.Message));
-                }
-            }
-            //上传公司Logo
-            HttpPostedFileBase file2 = Request.Files["UrlUpload"];
-            if (corp.LogoUrl == null && file2.FileName == "")
-            {
-                ModelState.AddModelError("urlerror", "请选择公司Logo");
-                return View(corp);
-            }
-            if (file2.FileName != "")
-            {
-                try
-                {
-                    var filename = Path.Combine(Request.MapPath("~/Upload"), file2.FileName);
-                    file2.SaveAs(filename);
-                    corp.LogoUrl = "/Upload/" + file2.FileName;
-                }
-                catch (Exception ex)
-                {
-                    return Content(string.Format("上传文件出现异常：{0}", ex.Message));
-                }
-            }
-
-            ModelState.Remove("LogoUrl");
-            ModelState.Remove("LogoIcon");
             if (ModelState.IsValid)
             {
                 if (sysCorpBll.EditCorporation(corp))
                 {
-                    TempData["returnMsgType"] = "success";
-                    TempData["returnMsg"] = "编辑成功";
+                    TempData["isSuccess"] = "true";
+                    TempData["MessageInfo"] = "完善信息成功!";
                     return View("Corporations");
                 }
             }
-
-            TempData["returnMsgType"] = "error";
-            TempData["returnMsg"] = "编辑失败";
+            TempData["isSuccess"] = "false";
+            TempData["MessageInfo"] = "完善信息失败!";
+            ViewData["CorpTypeList"] = dropDownListService.InitCorpTypeDropDownList();
+            ViewData["FeeTypeList"] = dropDownListService.InitCorpFeeTypeDropDownList();
+            ViewData["GradeList"] = dropDownListService.InitSysCorpGradeDropDownList();
+            ViewData["VocationList"] = dropDownListService.InitVocationDropDownList();
+            ViewData["ProvinceList"] = dropDownListService.InitProvinceDropDownList();
+            ViewData["AreaList"] = dropDownListService.InitCityDropDownList(corp.Province);
+            ViewData["CountyList"] = dropDownListService.InitCountyDropDownList(corp.Area);
             return View(corp);
         }
 
@@ -214,16 +168,16 @@ namespace USP.Areas.System.Controllers
         [Privilege(Menu = "公司信息", Name = "修改")]
         public ActionResult Information()
         {
+          
             long corp = ((User)HttpContext.Session[Common.Constants.USER_KEY]).SysCorp.ID;
-            var model = sysCorpBll.GetCorporation(corp);
+            var  model = sysCorpBll.GetCorporation(corp);
             ViewData["CorpTypeList"] = dropDownListService.InitCorpTypeDropDownList();
             ViewData["FeeTypeList"] = dropDownListService.InitCorpFeeTypeDropDownList();
             ViewData["GradeList"] = dropDownListService.InitSysCorpGradeDropDownList();
             ViewData["VocationList"] = dropDownListService.InitVocationDropDownList();
-            ViewBag.Province = model.Province;
-            ViewBag.Area = model.Area;
-            ViewBag.County = model.County;
-            ViewBag.Community = model.Community;
+            ViewData["ProvinceList"] = dropDownListService.InitProvinceDropDownList();
+            ViewData["AreaList"] = dropDownListService.InitCityDropDownList(model.Province);
+            ViewData["CountyList"] = dropDownListService.InitCountyDropDownList(model.Area);
             return View(model);
         }
 
@@ -235,75 +189,26 @@ namespace USP.Areas.System.Controllers
             corp.CreateTime = DateTime.Now;
             corp.Auditor = null;
             corp.AuditTime = null;
+            if (ModelState.IsValid)
+            {
+                if (sysCorpBll.EditCorporation(corp))
+                {
+                    TempData["isSuccess"] = "true";
+                    TempData["MessageInfo"] = "完善信息成功!";
+                    return View("Corporations");
+                }
+            }
+            TempData["isSuccess"] = "false";
+            TempData["MessageInfo"] = "完善信息失败!";
             ViewData["CorpTypeList"] = dropDownListService.InitCorpTypeDropDownList();
             ViewData["FeeTypeList"] = dropDownListService.InitCorpFeeTypeDropDownList();
             ViewData["GradeList"] = dropDownListService.InitSysCorpGradeDropDownList();
             ViewData["VocationList"] = dropDownListService.InitVocationDropDownList();
-            ViewBag.Province = corp.Province;
-            ViewBag.Area = corp.Area;
-            ViewBag.County = corp.County;
-            ViewBag.Community = corp.Community;
-            //上传公司图标
-            HttpPostedFileBase file1 = Request.Files["IconUpload"];
-            if (corp.LogoIcon == null && file1.FileName == "")
-            {
-                ModelState.AddModelError("iconerror", "请选择公司图标");
-                return View(corp);
-            }
-            if (file1.FileName != "")
-            {
-                try
-                {
-                    var filename = Path.Combine(Request.MapPath("~/Upload"), file1.FileName);
-                    file1.SaveAs(filename);
-                    corp.LogoIcon = "/Upload/" + file1.FileName;
-                }
-                catch (Exception ex)
-                {
-                    return Content(string.Format("上传文件出现异常：{0}", ex.Message));
-                }
-            }
-
-            //上传公司Logo
-            HttpPostedFileBase file2 = Request.Files["UrlUpload"];
-            if (corp.LogoUrl == null && file2.FileName == "")
-            {
-                ModelState.AddModelError("urlerror", "请选择公司Logo");
-                return View(corp);
-            }
-            if (file2.FileName != "")
-            {
-                try
-                {
-                    var filename = Path.Combine(Request.MapPath("~/Upload"), file2.FileName);
-                    file2.SaveAs(filename);
-                    corp.LogoUrl = "/Upload/" + file2.FileName;
-                }
-                catch (Exception ex)
-                {
-                    return Content(string.Format("上传文件出现异常：{0}", ex.Message));
-                }
-            }
-
-            ModelState.Remove("LogoUrl");
-            ModelState.Remove("LogoIcon");
-            if (ModelState.IsValid)
-            {
-                if (corp.Mobile == "")
-                {
-                    corp.Mobile = string.Empty;
-                }
-                if (sysCorpBll.EditCorporation(corp))
-                {
-                    TempData["returnMsgType"] = "success";
-                    TempData["returnMsg"] = "编辑成功";
-                    return View(corp);
-                }
-            }
-            TempData["returnMsgType"] = "error";
-            TempData["returnMsg"] = "编辑失败";
-
+            ViewData["ProvinceList"] = dropDownListService.InitProvinceDropDownList();
+            ViewData["AreaList"] = dropDownListService.InitCityDropDownList(corp.Province);
+            ViewData["CountyList"] = dropDownListService.InitCountyDropDownList(corp.Area);
             return View(corp);
+
         }
 
         [HttpPost]

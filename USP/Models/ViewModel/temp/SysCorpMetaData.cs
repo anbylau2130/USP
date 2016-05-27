@@ -17,11 +17,11 @@ using System.Runtime.CompilerServices;
 
 namespace USP.Models.ViewModel
 {
-    
-    
+
+
     public class SysCorpMetaData
     {
-        [Required] 
+        [Required]
         [Display(Name = "唯一标识")]
         public virtual long ID
         {
@@ -42,8 +42,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
         [Required]
         [Display(Name = "公司名称")]
         public virtual string Name
@@ -51,8 +51,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
         [Required]
         [Display(Name = "公司简称")]
         public virtual string BriefName
@@ -60,8 +60,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
         [Required]
         [Display(Name = "证书名称")]
         public virtual string Certificate
@@ -69,8 +69,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
         [Required]
         [Display(Name = "证书号码")]
         public virtual string CertificateNumber
@@ -78,8 +78,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
         [Required]
         [Display(Name = "法人代表")]
         public virtual string Ceo
@@ -87,8 +87,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(6, ErrorMessage="最多可输入6个字符")]
+
+        [StringLength(6, ErrorMessage = "最多可输入6个字符")]
         [Required]
         [Display(Name = "邮编")]
         public virtual string Postcode
@@ -96,8 +96,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(32, ErrorMessage="最多可输入32个字符")]
+
+        [StringLength(32, ErrorMessage = "最多可输入32个字符")]
         [Required]
         [Display(Name = "传真号")]
         public virtual string Faxcode
@@ -105,8 +105,8 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
         [Required]
         [Display(Name = "联系人")]
         public virtual string Linkman
@@ -114,8 +114,9 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(32, ErrorMessage="最多可输入32个字符")]
+
+        [StringLength(32, ErrorMessage = "最多可输入32个字符")]
+        [Required]
         [Display(Name = "联系手机")]
         [Phone]
         public virtual string Mobile
@@ -123,8 +124,9 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入10个字符")]
+
+        [StringLength(10, ErrorMessage = "最多可输入10个字符")]
+        [Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public virtual string Email
@@ -132,24 +134,27 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
+        [Required]
         [Display(Name = "联系QQ")]
         public virtual string Qq
         {
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "微信")]
         public virtual string Wechat
         {
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "微博")]
         public virtual string Weibo
         {
@@ -219,80 +224,89 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "省份")]
         public virtual string Province
         {
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "地区")]
         public virtual string Area
         {
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "县")]
         public virtual string County
         {
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "社区")]
         public virtual string Community
         {
             get;
             set;
         }
-    	
-        [StringLength(100, ErrorMessage="最多可输入100个字符")]
+
+        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
+        [Required]
         [Display(Name = "地址")]
         public virtual string Address
         {
             get;
             set;
         }
+        [Required]
         [Display(Name = "状态")]
         public virtual long Status
         {
             get;
             set;
         }
+        [Required]
         [Display(Name = "类型")]
         public virtual long Type
         {
             get;
             set;
         }
+        [Required]
         [Display(Name = "级别")]
         public virtual long Grade
         {
             get;
             set;
         }
+        [Required]
         [Display(Name = "行业类型")]
         public virtual long Vocation
         {
             get;
             set;
         }
-    	
-        [StringLength(250, ErrorMessage="最多可输入250个字符")]
+
+        [StringLength(250, ErrorMessage = "最多可输入250个字符")]
         [Display(Name = "预留")]
         public virtual string Reserve
         {
             get;
             set;
         }
-    	
-        [StringLength(250, ErrorMessage="最多可输入250个字符")]
+
+        [StringLength(250, ErrorMessage = "最多可输入250个字符")]
         [Display(Name = "备注")]
         public virtual string Remark
         {
@@ -337,16 +351,18 @@ namespace USP.Models.ViewModel
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
+        [Required]
         [Display(Name = "公司Logo")]
         public virtual string LogoUrl
         {
             get;
             set;
         }
-    	
-        [StringLength(50, ErrorMessage="最多可输入50个字符")]
+
+        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
+        [Required]
         [Display(Name = "公司图标")]
         public virtual string LogoIcon
         {

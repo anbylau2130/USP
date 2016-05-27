@@ -185,7 +185,7 @@ namespace USP.Bll.Impl
             {
                 strWhere += " and Status = " + status;
             }
-            if (corp >= 0)
+            if (corp > 0)
             {
                 strWhere += " and Corp = " + corp;
             }
@@ -193,7 +193,11 @@ namespace USP.Bll.Impl
             {
                 strWhere += " and ID <> " + operatorID;
             }
-            strWhere += "and [ID] not in(select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出不为系统管理员的操作员
+            if (corp != 0)
+            {
+                strWhere += "and [ID] not in(select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出不为系统管理员的操作员
+            }
+            //strWhere += "and [ID] not in(select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出不为系统管理员的操作员
             var operators = operatorDal.GetOperatorPage("*", strWhere, "ID ASC", page, pagesize);
             result.rows = operators;
             if (result.rows.Count > 0)
@@ -269,9 +273,9 @@ namespace USP.Bll.Impl
             }
         }
 
-        public bool EditOperator(OperaterAddEdit model)
+        public ProcResult EditOperator(OperaterAddEdit model)
         {
-            return operatorDal.EditOperator(model.ID, model.LoginName, model.RealName, model.Role, model.Creator);
+            return operatorDal.EditOperator(model);
         }
     }
 }
