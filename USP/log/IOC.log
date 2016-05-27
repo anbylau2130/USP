@@ -56,3 +56,5 @@ InnerException:The Entity Framework provider type 'System.Data.Entity.SqlServer.
    дк Microsoft.Practices.ObjectBuilder2.BuildPlanStrategy.PreBuildUp(IBuilderContext context)
    дк Microsoft.Practices.ObjectBuilder2.StrategyChain.ExecuteBuildUp(IBuilderContext context)
    дк Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name, IEnumerable`1 resolverOverrides)
+2016-05-27 17:02:56,424 DEBUG USP.Controllers.UserController
+2016-05-27 17:03:40,780 DEBUG USP.Controllers.UserController
