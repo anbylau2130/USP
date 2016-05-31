@@ -66,6 +66,7 @@ namespace USP.Context
         public virtual DbSet<OpenPlatformType> OpenPlatformType { get; set; }
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<SysBank> SysBank { get; set; }
+        public virtual DbSet<SysOperatorSupplier> SysOperatorSupplier { get; set; }
     
         public virtual int UP_AddMenu(string name, string icon)
         {
@@ -877,32 +878,6 @@ namespace USP.Context
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<long>>("UP_AlterBankStatus", statusParameter, alterOperaterParameter, iDParameter, typeParameter);
         }
     
-        public virtual ObjectResult<string> UP_AuditorCorp1(Nullable<long> corp, Nullable<long> auditor)
-        {
-            var corpParameter = corp.HasValue ?
-                new ObjectParameter("Corp", corp) :
-                new ObjectParameter("Corp", typeof(long));
-    
-            var auditorParameter = auditor.HasValue ?
-                new ObjectParameter("Auditor", auditor) :
-                new ObjectParameter("Auditor", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_AuditorCorp1", corpParameter, auditorParameter);
-        }
-    
-        public virtual ObjectResult<string> UP_CancelCorp1(Nullable<long> corp, Nullable<long> canceler)
-        {
-            var corpParameter = corp.HasValue ?
-                new ObjectParameter("Corp", corp) :
-                new ObjectParameter("Corp", typeof(long));
-    
-            var cancelerParameter = canceler.HasValue ?
-                new ObjectParameter("Canceler", canceler) :
-                new ObjectParameter("Canceler", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_CancelCorp1", corpParameter, cancelerParameter);
-        }
-    
         public virtual ObjectResult<Nullable<long>> UP_EditBank(Nullable<long> id, Nullable<long> number, string name, string niceName, string shortName, string remark, string url, Nullable<long> creator, Nullable<int> type)
         {
             var idParameter = id.HasValue ?
@@ -1039,6 +1014,64 @@ namespace USP.Context
                 new ObjectParameter("strOrderType", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowCorp_Result>("UP_ShowCorp", pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
+        }
+    
+        public virtual ObjectResult<string> UP_AddOperaterSupplier(Nullable<long> @operator, Nullable<long> supplier, Nullable<long> creator)
+        {
+            var operatorParameter = @operator.HasValue ?
+                new ObjectParameter("Operator", @operator) :
+                new ObjectParameter("Operator", typeof(long));
+    
+            var supplierParameter = supplier.HasValue ?
+                new ObjectParameter("Supplier", supplier) :
+                new ObjectParameter("Supplier", typeof(long));
+    
+            var creatorParameter = creator.HasValue ?
+                new ObjectParameter("Creator", creator) :
+                new ObjectParameter("Creator", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_AddOperaterSupplier", operatorParameter, supplierParameter, creatorParameter);
+        }
+    
+        public virtual ObjectResult<UP_ShowOperatorInfo_Result> UP_ShowOperatorInfo(string server, string dataBase, string uID, string pWD, Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
+        {
+            var serverParameter = server != null ?
+                new ObjectParameter("Server", server) :
+                new ObjectParameter("Server", typeof(string));
+    
+            var dataBaseParameter = dataBase != null ?
+                new ObjectParameter("DataBase", dataBase) :
+                new ObjectParameter("DataBase", typeof(string));
+    
+            var uIDParameter = uID != null ?
+                new ObjectParameter("UID", uID) :
+                new ObjectParameter("UID", typeof(string));
+    
+            var pWDParameter = pWD != null ?
+                new ObjectParameter("PWD", pWD) :
+                new ObjectParameter("PWD", typeof(string));
+    
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var whereStrParameter = whereStr != null ?
+                new ObjectParameter("WhereStr", whereStr) :
+                new ObjectParameter("WhereStr", typeof(string));
+    
+            var strOrderParameter = strOrder != null ?
+                new ObjectParameter("strOrder", strOrder) :
+                new ObjectParameter("strOrder", typeof(string));
+    
+            var strOrderTypeParameter = strOrderType != null ?
+                new ObjectParameter("strOrderType", strOrderType) :
+                new ObjectParameter("strOrderType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowOperatorInfo_Result>("UP_ShowOperatorInfo", serverParameter, dataBaseParameter, uIDParameter, pWDParameter, pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
         }
     }
 }

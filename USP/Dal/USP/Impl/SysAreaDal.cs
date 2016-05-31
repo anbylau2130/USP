@@ -65,7 +65,7 @@ namespace USP.Dal.Impl
         }
 
 
-        public List<USP.Models.Entity.Area> GetAreaPageList()
+        public List<Area> GetAreaPageList()
         {
             return db.Area.ToList();
         }

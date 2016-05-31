@@ -12,7 +12,7 @@ namespace USP.Dal
     public interface ISysSkinDal
     {
 
-         List<USP.Models.Entity.SysSkin> Getlists();
+         List<SysSkin> Getlists();
 
          SysSkin GetModelById(long id);
     }

@@ -163,8 +163,10 @@
     <Compile Include="Areas\System\Controllers\TestController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Attributes\NoFilter.cs" />
+    <Compile Include="Bll\K3CLoud\Impl\SupplierGroupBll.cs" />
     <Compile Include="Bll\K3CLoud\Impl\SupplierBll.cs" />
     <Compile Include="Bll\K3CLoud\ISupplierBll.cs" />
+    <Compile Include="Bll\K3CLoud\ISupplierGroupBll.cs" />
     <Compile Include="Bll\USP\Impl\SysAreaBll.cs" />
     <Compile Include="Bll\USP\Impl\SysBankBll.cs" />
     <Compile Include="Bll\USP\Impl\SysCorpBll.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Bll\USP\Impl\SysLoginLogBll.cs" />
     <Compile Include="Bll\USP\Impl\SysMenuBll.cs" />
     <Compile Include="Bll\USP\Impl\SysMenuTemplateBll.cs" />
+    <Compile Include="Bll\USP\Impl\SysOperaterSupplierBll.cs" />
     <Compile Include="Bll\USP\Impl\SysOperatorBll.cs" />
     <Compile Include="Bll\USP\Impl\SysPrivilegeBll.cs" />
     <Compile Include="Bll\USP\Impl\SysPrivilegeTemplateBll.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="Bll\USP\ISysLoginLogBll.cs" />
     <Compile Include="Bll\USP\ISysMenuBll.cs" />
     <Compile Include="Bll\USP\ISysMenuTemplateBll.cs" />
+    <Compile Include="Bll\USP\ISysOperaterSupplierBll.cs" />
     <Compile Include="Bll\USP\ISysOperatorBll.cs" />
     <Compile Include="Bll\USP\ISysPrivilegeBll.cs" />
     <Compile Include="Bll\USP\ISysPrivilegeTemplateBll.cs" />
@@ -227,8 +231,12 @@
       <DependentUpon>Usp.edmx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OEMController.cs" />
+    <Compile Include="Dal\K3CLoud\Impl\SupplierGroupDal.cs" />
+    <Compile Include="Dal\K3CLoud\ISupplierGroupDal.cs" />
     <Compile Include="Dal\K3CLoud\Impl\SupplierDal.cs" />
     <Compile Include="Dal\K3CLoud\ISupplierDal.cs" />
+    <Compile Include="Dal\USP\Impl\SysOperaterSupplierDal.cs" />
+    <Compile Include="Dal\USP\ISysOperaterSupplierDal.cs" />
     <Compile Include="Dal\USP\Impl\SysAreaDal.cs" />
     <Compile Include="Dal\USP\Impl\SysBankDal.cs" />
     <Compile Include="Dal\USP\Impl\SysCorpDal.cs" />
@@ -292,6 +300,7 @@
     <Compile Include="Models\Entity\temp\SysOperatorGrade.cs" />
     <Compile Include="Models\Entity\temp\SysOperatorStar.cs" />
     <Compile Include="Models\Entity\temp\SysOperatorStatus.cs" />
+    <Compile Include="Models\Entity\temp\SysOperatorSupplier.cs" />
     <Compile Include="Models\Entity\temp\SysPrivilege.cs" />
     <Compile Include="Models\Entity\temp\SysPrivilegeTemplate.cs" />
     <Compile Include="Models\Entity\temp\SysRole.cs" />
@@ -305,6 +314,7 @@
     <Compile Include="Models\Entity\temp\UP_ShowCity_Result.cs" />
     <Compile Include="Models\Entity\temp\UP_ShowCorp_Result.cs" />
     <Compile Include="Models\Entity\temp\UP_ShowCounty_Result.cs" />
+    <Compile Include="Models\Entity\temp\UP_ShowOperatorInfo_Result.cs" />
     <Compile Include="Models\Entity\temp\UP_ShowPrivilegeTemplate_Result.cs" />
     <Compile Include="Models\Entity\temp\UP_ShowProvince_Result.cs" />
     <Compile Include="Models\Entity\temp\Usp.cs" />
@@ -323,6 +333,7 @@
     <Compile Include="Models\POCO\BankAddEdit.cs" />
     <Compile Include="Models\POCO\BankType.cs" />
     <Compile Include="Models\POCO\Bank_Extend.cs" />
+    <Compile Include="Models\POCO\OperatorSupplier.cs" />
     <Compile Include="Models\POCO\Corp.cs" />
     <Compile Include="Models\POCO\CorpResult.cs" />
     <Compile Include="Models\POCO\CorpType.cs" />
@@ -331,6 +342,7 @@
     <Compile Include="Models\POCO\PrivilegeTemplateResult.cs" />
     <Compile Include="Models\POCO\ProcResult.cs" />
     <Compile Include="Models\POCO\RePassword.cs" />
+    <Compile Include="Models\POCO\SupplierTreeNode.cs" />
     <Compile Include="Models\POCO\SysPrivilegeExt.cs" />
     <Compile Include="Models\POCO\TreeOptions.cs" />
     <Compile Include="Models\POCO\UspCreateList.cs" />
@@ -372,6 +384,7 @@
     <Compile Include="Models\ViewModel\temp\SysOperatorMetaData.cs" />
     <Compile Include="Models\ViewModel\temp\SysOperatorStarMetaData.cs" />
     <Compile Include="Models\ViewModel\temp\SysOperatorStatusMetaData.cs" />
+    <Compile Include="Models\ViewModel\temp\SysOperatorSupplierMetaData.cs" />
     <Compile Include="Models\ViewModel\temp\SysPrivilegeMetaData.cs" />
     <Compile Include="Models\ViewModel\temp\SysPrivilegeTemplateMetaData.cs" />
     <Compile Include="Models\ViewModel\temp\SysRoleMenuMetaData.cs" />
@@ -760,6 +773,7 @@
     <Content Include="Static\Css\themes\metro\window.css" />
     <Content Include="Static\Css\themes\mobile.css" />
     <Content Include="Static\Css\toastr.min.css" />
+    <Content Include="Static\Css\usp\usp.operator.relationsupplier.css" />
     <Content Include="Static\Css\usp\usp.bank.css" />
     <Content Include="Static\Css\usp\usp.changepassword.css" />
     <Content Include="Static\Css\usp\usp.corporation.addcorporation.css" />
@@ -857,6 +871,7 @@
     <Content Include="Context\K3Cloud.edmx.diagram">
       <DependentUpon>K3Cloud.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\System\Views\Operator\RelationSupplier.cshtml" />
     <None Include="Properties\PublishProfiles\NewU.pubxml" />
     <None Include="Static\Js\jquery-1.11.1.intellisense.js" />
     <Content Include="Static\Js\jquery-1.11.1.js" />
@@ -920,6 +935,7 @@
     <Content Include="Static\Js\usp\usp.system.menutemplate.js" />
     <Content Include="Static\Js\usp\usp.system.operator.js" />
     <Content Include="Static\Js\usp\usp.system.corptype.js" />
+    <Content Include="Static\Js\usp\usp.system.operator.relationsupplier.js" />
     <Content Include="Static\Js\usp\usp.system.sysprivilege.js" />
     <Content Include="Static\Js\usp\usp.system.privilege.js" />
     <Content Include="Static\Js\usp\usp.system.role.js" />

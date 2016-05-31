@@ -43,6 +43,7 @@
         <EntityTypeShape EntityType="UspModel.OpenPlatformType" Width="1.5" PointX="18.75" PointY="12.75" />
         <EntityTypeShape EntityType="UspModel.Area" Width="1.5" PointX="13.375" PointY="18.75" />
         <EntityTypeShape EntityType="UspModel.SysBank" Width="1.5" PointX="15.375" PointY="18.75" />
+        <EntityTypeShape EntityType="UspModel.SysOperatorSupplier" Width="1.5" PointX="17.375" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

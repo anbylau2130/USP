@@ -5,6 +5,11 @@ using System.Web;
 
 namespace USP.Common
 {
+
+    //<add key = "DBLinkServer" value="10.1.1.50"/>
+    //<add key = "DBDataBase" value="20160418"/>
+    //<add key = "DBUID" value="XXB"/>
+    //<add key = "DBPWD" value="xinxibu"/>
     public class Constants
     {
         public const string CAPTCHA = "CAPTCHA";
@@ -12,6 +17,13 @@ namespace USP.Common
         public const string USER_MENU = "USER_MENU";
         public const string USER_PRIVILEGE = "USER_PRIVILEGE";
         public const string ACTION_DURATION = "ACTION_DURATION";
+        public static string DB_Server = System.Configuration.ConfigurationManager.AppSettings["DBLinkServer"].ToString();
+        public static string DB_DataBase = System.Configuration.ConfigurationManager.AppSettings["DBDataBase"].ToString();
+        public static string DB_UID = System.Configuration.ConfigurationManager.AppSettings["DBUID"].ToString();
+        public static string DB_PWD = System.Configuration.ConfigurationManager.AppSettings["DBPWD"].ToString();
+
+
+
     }
 
     public class Common

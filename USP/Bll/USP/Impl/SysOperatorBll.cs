@@ -15,16 +15,18 @@ namespace USP.Bll.Impl
     public class SysOperatorBll : ISysOperatorBll
     {
         ISysOperatorService sysOperatorService;
-        Dal.ISysOperatorDal sysOperatorDal;
+        ISysOperatorDal sysOperatorDal;
         ISysUserDal operatorDal;
+        ISupplierBll supplierBll;
         //ISysLoginLogBll sysLoginLogBll;
         ISysLoginLogDal sysLoginLogDal;
-        public SysOperatorBll(ISysOperatorService sysOperatorService, Dal.ISysOperatorDal sysOperatorDal, ISysUserDal sysUserDal, ISysLoginLogDal sysLoginLogDal)
+        public SysOperatorBll(ISupplierBll supplierBll,ISysOperatorService sysOperatorService, Dal.ISysOperatorDal sysOperatorDal, ISysUserDal sysUserDal, ISysLoginLogDal sysLoginLogDal)
         {
             this.sysOperatorService = sysOperatorService;
             this.sysOperatorDal = sysOperatorDal;
             this.operatorDal = sysUserDal;
             this.sysLoginLogDal = sysLoginLogDal;
+            this.supplierBll = supplierBll;
         }
 
         public AjaxResult Login(Login login, HttpContextBase httpContext)
@@ -40,7 +42,12 @@ namespace USP.Bll.Impl
                 User user = new User();
                 user.SysOperator = operators[0];
                 user.SysCorp = sysOperatorService.GetCorp(user.SysOperator.Corp);
-
+                //供应商赋值
+                var supplier = supplierBll.GetSupplierByOperatorId(user.SysOperator.ID);
+                if (supplier != null)
+                {
+                    user.Supplier = supplier;
+                }
                 if ((user.SysCorp.Status!=0))
                 {
                     result.flag = false;
@@ -69,6 +76,7 @@ namespace USP.Bll.Impl
                     {
                         user.Menus = new List<UserMenu>();
                     }
+
                     httpContext.Session.Add(Constants.USER_KEY, user);
                     //添加登录日志
                     sysLoginLogDal.Add(new SysLoginLog()
@@ -168,6 +176,8 @@ namespace USP.Bll.Impl
         {
             return operatorDal.GetOperatorbyLoginName(name);
         }
+
+     
 
         public DataGrid<Operator_Extend> GetOperatorGrid(int page, int pagesize, string order, string orderType, string userName, string RealName, long role, long status, long corp, long operatorID)
         {
@@ -276,6 +286,37 @@ namespace USP.Bll.Impl
         public ProcResult EditOperator(OperaterAddEdit model)
         {
             return operatorDal.EditOperator(model);
+        }
+
+        public List<UP_ShowOperatorInfo_Result> GetOperatorPageData( int? pageIndex, int? pageSize,string userName, string RealName, long corp, long status,long operatorID, string strOrder="", string strOrderType="")
+        {
+            string strWhere = string.Empty;
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                strWhere += " and LoginName like '%" + userName + "%' ";
+            }
+           
+            if (!string.IsNullOrWhiteSpace(RealName))
+            {
+                strWhere += " and RealName like '%" + RealName + "%' ";
+            }
+            if (status != -1)
+            {
+                strWhere += " and Status = " + status;
+            }
+            if (corp > 0)
+            {
+                strWhere += " and Corp = " + corp;
+            }
+            if (operatorID >= 0)
+            {
+                strWhere += " and ID <> " + operatorID;
+            }
+            
+            strWhere += "and [ID] not in(select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出不为系统管理员的操作员
+           
+            //GetOperatorPageData(Constants.DB_Server, Constants.DB_DataBase, Constants.DB_UID, Constants.DB_PWD, page, rows, "", "", "");
+            return operatorDal.GetOperatorPageData(Constants.DB_Server, Constants.DB_DataBase, Constants.DB_UID, Constants.DB_PWD, pageIndex, pageSize, strWhere, strOrder, strOrderType);
         }
     }
 }

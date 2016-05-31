@@ -17,5 +17,6 @@ namespace USP.Dal
         SysOperator GetOperatorbyLoginName(string name);
         List<SysRole> GetRolesByOperator(long? opid);
         ProcResult EditOperator(OperaterAddEdit model);
+        List<UP_ShowOperatorInfo_Result> GetOperatorPageData(string server, string dataBase, string uID, string pWD, Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType);
     }
 }

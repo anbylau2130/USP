@@ -57,3 +57,6 @@ go
 --初始化超级管理员 按钮权限
 --insert into SysRolePrivilege(Role,Privilege,Creator,Auditor) select 0,ID,0,0 from SysPrivilege
 --go
+
+  --insert into SysRolePrivilege(Role,Privilege,Creator,Auditor) select 0,ID,0,0 from SysPrivilege
+  --WHERE id NOT IN  (SELECT privilege FROM SysRolePrivilege WHERE Role=0 )

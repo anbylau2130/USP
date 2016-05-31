@@ -10,5 +10,9 @@ namespace USP.Models.POCO
     {
         public long? RowNo { get; set; }
         public long? RowCnt { get; set; }
+
+        public  string Supplier { get; set; }
+
+        public string SupplierName { get; set; }
     }
 }

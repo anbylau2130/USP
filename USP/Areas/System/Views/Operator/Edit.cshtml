@@ -80,6 +80,7 @@
     <script type="text/javascript" src="~/Static/Js/usp/usp.system.operator.js"></script>
     <script>
         $(function () {
+            usp.init();
             usp.system.operator.initRoleTree('#operatorRole', '/System/Operator/Edit');
             usp.system.operator.checkEditLoginName('@Model.LoginName');
             if ('@TempData["returnMsgType"]' == 'error') {

@@ -33,7 +33,15 @@
                     field: 'Email',
                     title: '邮箱',
                     width: 200
-                }, {
+                } ,{
+                    field: 'Supplier',
+                    title: '供应商编号',
+                    width: 200
+                },  {
+                    field: 'SupplierName',
+                    title: '供应商名称',
+                    width: 200
+                },{
                     field: 'Status',
                     title: '状态',
                     width: 60,
@@ -104,7 +112,7 @@
     usp.system.operator.edit = function () {
         var opr = $('#operator').datagrid("getSelected");
         if (opr) {
-                    location.href = '/System/Operator/Edit?id=' + opr.ID;
+            location.href = '/System/Operator/Edit?id=' + opr.ID;
         } else {
             $.messager.alert('提示信息', '请选择要编辑的操作员！');
         }
@@ -117,6 +125,15 @@
         $('#operator').datagrid('load', { actionName: 'datagrid', type: type, name: name, status: status });
     }
 
+
+    usp.system.operator.supplier= function() {
+        var opr = $('#operator').datagrid("getSelected");
+        if (opr) {
+            location.href = '/System/Operator/RelationSupplier?id=' + opr.ID;
+        } else {
+            $.messager.alert('提示信息', '请选择要编辑的操作员！');
+        }
+    }
     usp.system.operator.audit = function () {
         var opr = $('#operator').datagrid("getSelected");
         if (opr) {
@@ -271,6 +288,9 @@
         }
     }
 
+
+
+
     /////添加编辑页////
     usp.system.operator.initRoleTree = function (treeId, url) {
         $(treeId).tree({
@@ -334,7 +354,7 @@
     }
 
     //列表页初始化
-    usp.system.operator.init = function (dgId, dgUrl, dgToolBar1, dgToolBar2, auditUrl, cancelUrl, activeUrl, resetPsdUrl,comboId,comboUrl) {
+    usp.system.operator.init = function (dgId, dgUrl, dgToolBar1, dgToolBar2, auditUrl, cancelUrl, activeUrl, resetPsdUrl,comboId,comboUrl,supplierUrl) {
         this.dgId = dgId;
         this.dgUrl = dgUrl;
         this.dgToolBar1 = dgToolBar1;

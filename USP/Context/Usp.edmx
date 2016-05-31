@@ -636,6 +636,22 @@
           <Property Name="Canceler" Type="bigint" />
           <Property Name="CancelTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="SysOperatorSupplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Operator" Type="bigint" />
+          <Property Name="Supplier" Type="bigint" />
+          <Property Name="Creator" Type="bigint" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="Auditor" Type="bigint" />
+          <Property Name="AuditTime" Type="datetime" />
+          <Property Name="Canceler" Type="bigint" />
+          <Property Name="CancelTime" Type="datetime" />
+          <Property Name="Remark" Type="varchar" MaxLength="50" />
+          <Property Name="Reserve" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="SysPrivilege">
           <Key>
             <PropertyRef Name="ID" />
@@ -790,6 +806,11 @@
           <Parameter Name="Action" Type="varchar" Mode="In" />
           <Parameter Name="Parameter" Type="varchar" Mode="In" />
           <Parameter Name="Url" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Creator" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="UP_AddOperaterSupplier" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Operator" Type="bigint" Mode="In" />
+          <Parameter Name="Supplier" Type="bigint" Mode="In" />
           <Parameter Name="Creator" Type="bigint" Mode="In" />
         </Function>
         <Function Name="UP_AddOperator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -953,6 +974,17 @@
         <Function Name="UP_ShowCounty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="City" Type="char" Mode="In" />
         </Function>
+        <Function Name="UP_ShowOperatorInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Server" Type="varchar(max)" Mode="In" />
+          <Parameter Name="DataBase" Type="varchar(max)" Mode="In" />
+          <Parameter Name="UID" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PWD" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="WhereStr" Type="nvarchar" Mode="In" />
+          <Parameter Name="strOrder" Type="varchar(max)" Mode="In" />
+          <Parameter Name="strOrderType" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="UP_ShowPage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="strGetFields" Type="varchar(max)" Mode="In" />
           <Parameter Name="tblName" Type="varchar(max)" Mode="In" />
@@ -1007,6 +1039,7 @@
           <EntitySet Name="SysOperatorGrade" EntityType="Self.SysOperatorGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysOperatorStar" EntityType="Self.SysOperatorStar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysOperatorStatus" EntityType="Self.SysOperatorStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SysOperatorSupplier" EntityType="Self.SysOperatorSupplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysPrivilege" EntityType="Self.SysPrivilege" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysPrivilegeTemplate" EntityType="Self.SysPrivilegeTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SysRole" EntityType="Self.SysRole" Schema="dbo" store:Type="Tables" />
@@ -1313,14 +1346,6 @@
             <Parameter Name="ID" Mode="In" Type="Int64" />
             <Parameter Name="type" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UP_AuditorCorp1" ReturnType="Collection(String)">
-            <Parameter Name="Corp" Mode="In" Type="Int64" />
-            <Parameter Name="Auditor" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="UP_CancelCorp1" ReturnType="Collection(String)">
-            <Parameter Name="Corp" Mode="In" Type="Int64" />
-            <Parameter Name="Canceler" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="UP_EditBank" ReturnType="Collection(Int64)">
             <Parameter Name="id" Mode="In" Type="Int64" />
             <Parameter Name="number" Mode="In" Type="Int64" />
@@ -1351,6 +1376,23 @@
             <Parameter Name="Auditor" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="UP_ShowCorp" ReturnType="Collection(UspModel.UP_ShowCorp_Result)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="WhereStr" Mode="In" Type="String" />
+            <Parameter Name="strOrder" Mode="In" Type="String" />
+            <Parameter Name="strOrderType" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="SysOperatorSupplier" EntityType="UspModel.SysOperatorSupplier" />
+          <FunctionImport Name="UP_AddOperaterSupplier" ReturnType="Collection(String)">
+            <Parameter Name="Operator" Mode="In" Type="Int64" />
+            <Parameter Name="Supplier" Mode="In" Type="Int64" />
+            <Parameter Name="Creator" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="UP_ShowOperatorInfo" ReturnType="Collection(UspModel.UP_ShowOperatorInfo_Result)">
+            <Parameter Name="Server" Mode="In" Type="String" />
+            <Parameter Name="DataBase" Mode="In" Type="String" />
+            <Parameter Name="UID" Mode="In" Type="String" />
+            <Parameter Name="PWD" Mode="In" Type="String" />
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
             <Parameter Name="WhereStr" Mode="In" Type="String" />
@@ -2249,6 +2291,73 @@
           <Property Type="String" Name="Canceler" Nullable="true" MaxLength="100" />
           <Property Type="DateTime" Name="CancelTime" Nullable="true" Precision="23" />
         </ComplexType>
+        <EntityType Name="SysOperatorSupplier">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Operator" Type="Int64" />
+          <Property Name="Supplier" Type="Int64" />
+          <Property Name="Creator" Type="Int64" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="Auditor" Type="Int64" />
+          <Property Name="AuditTime" Type="DateTime" Precision="3" />
+          <Property Name="Canceler" Type="Int64" />
+          <Property Name="CancelTime" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Reserve" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="UP_ShowOperatorInfo_Result" >
+          <Property Type="Int64" Name="ID" Nullable="false" />
+          <Property Type="Int64" Name="Corp" Nullable="false" />
+          <Property Type="String" Name="LoginName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="RealName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="Mobile" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="IdCard" Nullable="true" MaxLength="32" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="WechatOpenid" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AlipayOpenid" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Weibo" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AvailableIP" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="WeatherCode" Nullable="true" MaxLength="6" />
+          <Property Type="Int64" Name="VirtualIntegral" Nullable="false" />
+          <Property Type="Int64" Name="RealIntegral" Nullable="false" />
+          <Property Type="Decimal" Name="Balance" Nullable="false" Precision="20" Scale="8" />
+          <Property Type="Decimal" Name="FrozenBalance" Nullable="false" Precision="20" Scale="8" />
+          <Property Type="Decimal" Name="IncomingBalance" Nullable="false" Precision="20" Scale="8" />
+          <Property Type="Decimal" Name="Commission" Nullable="false" Precision="20" Scale="8" />
+          <Property Type="Decimal" Name="Discount" Nullable="false" Precision="20" Scale="8" />
+          <Property Type="String" Name="Province" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Area" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="County" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Community" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Address" Nullable="false" MaxLength="100" />
+          <Property Type="Int64" Name="Status" Nullable="false" />
+          <Property Type="Int64" Name="Skin" Nullable="false" />
+          <Property Type="Int64" Name="Grade" Nullable="true" />
+          <Property Type="Int64" Name="Star" Nullable="true" />
+          <Property Type="String" Name="Session" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="LoginTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="LoginIP" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="LoginAgent" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="LoginCount" Nullable="true" />
+          <Property Type="Int64" Name="LoginErrorCount" Nullable="true" />
+          <Property Type="DateTime" Name="FrozenStartTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="FrozenEndTime" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Reserve" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="250" />
+          <Property Type="Int64" Name="Creator" Nullable="false" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="23" />
+          <Property Type="Int64" Name="Auditor" Nullable="true" />
+          <Property Type="DateTime" Name="AuditTime" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="Canceler" Nullable="true" />
+          <Property Type="DateTime" Name="CancelTime" Nullable="true" Precision="23" />
+          <Property Type="Int64" Name="RowCnt" Nullable="false" />
+          <Property Type="Int64" Name="RowNo" Nullable="false" />
+          <Property Type="Int64" Name="Supplier" Nullable="true" />
+          <Property Type="String" Name="SupplierName" Nullable="true" MaxLength="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3145,8 +3254,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="UP_AuditorCorp1" FunctionName="UspModel.Store.UP_AuditorCorp" />
-          <FunctionImportMapping FunctionImportName="UP_CancelCorp1" FunctionName="UspModel.Store.UP_CancelCorp" />
           <FunctionImportMapping FunctionImportName="UP_AuditorPrivilegeTemplate" FunctionName="UspModel.Store.UP_AuditorPrivilegeTemplate" />
           <FunctionImportMapping FunctionImportName="UP_ShowCorp" FunctionName="UspModel.Store.UP_ShowCorp">
             <ResultMapping>
@@ -3216,6 +3323,79 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UP_GetOperatorRole" FunctionName="UspModel.Store.UP_GetOperatorRole" />
           <FunctionImportMapping FunctionImportName="UP_EditOperator" FunctionName="UspModel.Store.UP_EditOperator" />
+          <EntitySetMapping Name="SysOperatorSupplier">
+            <EntityTypeMapping TypeName="UspModel.SysOperatorSupplier">
+              <MappingFragment StoreEntitySet="SysOperatorSupplier">
+                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CancelTime" ColumnName="CancelTime" />
+                <ScalarProperty Name="Canceler" ColumnName="Canceler" />
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UP_AddOperaterSupplier" FunctionName="UspModel.Store.UP_AddOperaterSupplier" />
+          <FunctionImportMapping FunctionImportName="UP_ShowOperatorInfo" FunctionName="UspModel.Store.UP_ShowOperatorInfo" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UspModel.UP_ShowOperatorInfo_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Corp" ColumnName="Corp" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WechatOpenid" ColumnName="WechatOpenid" />
+                <ScalarProperty Name="AlipayOpenid" ColumnName="AlipayOpenid" />
+                <ScalarProperty Name="Weibo" ColumnName="Weibo" />
+                <ScalarProperty Name="AvailableIP" ColumnName="AvailableIP" />
+                <ScalarProperty Name="WeatherCode" ColumnName="WeatherCode" />
+                <ScalarProperty Name="VirtualIntegral" ColumnName="VirtualIntegral" />
+                <ScalarProperty Name="RealIntegral" ColumnName="RealIntegral" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="FrozenBalance" ColumnName="FrozenBalance" />
+                <ScalarProperty Name="IncomingBalance" ColumnName="IncomingBalance" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="Community" ColumnName="Community" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Skin" ColumnName="Skin" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Star" ColumnName="Star" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="LoginIP" ColumnName="LoginIP" />
+                <ScalarProperty Name="LoginAgent" ColumnName="LoginAgent" />
+                <ScalarProperty Name="LoginCount" ColumnName="LoginCount" />
+                <ScalarProperty Name="LoginErrorCount" ColumnName="LoginErrorCount" />
+                <ScalarProperty Name="FrozenStartTime" ColumnName="FrozenStartTime" />
+                <ScalarProperty Name="FrozenEndTime" ColumnName="FrozenEndTime" />
+                <ScalarProperty Name="Reserve" ColumnName="Reserve" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Auditor" ColumnName="Auditor" />
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="Canceler" ColumnName="Canceler" />
+                <ScalarProperty Name="CancelTime" ColumnName="CancelTime" />
+                <ScalarProperty Name="RowCnt" ColumnName="RowCnt" />
+                <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

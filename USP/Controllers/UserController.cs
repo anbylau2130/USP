@@ -24,8 +24,10 @@ namespace USP.Controllers
         {
             Session.Abandon();
             Login login = new Login();
-            login.Name = "admin";
-            login.Password = "123456";
+            login.Name = "";
+            login.Password = "";
+            //login.Name = "admin";
+            //login.Password = "123456";
             return View();
         }
 

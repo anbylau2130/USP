@@ -1437,3 +1437,105 @@ END
 	end catch 	
 
 	SELECT @IsSuccess+'|'+@ProcMsg as Result
+
+	go
+
+	
+create  PROC UP_ShowOperatorInfo
+@Server VARCHAR(max)='10.1.1.50',
+@DataBase VARCHAR(max)='20160418',
+@UID VARCHAR(max)='XXB',
+@PWD VARCHAR(max)='xinxibu',
+@PageIndex int = 1,  
+@PageSize int = 10,
+@WhereStr nvarchar(200)='',  
+@strOrder varchar(MAX) = '',  
+@strOrderType varchar(max) = 'ASC'  
+AS
+
+DECLARE @sqlstr VARCHAR(max)
+
+
+EXEC sp_droplinkedsrvlogin K3Cloud,Null  
+Exec sp_dropserver K3Cloud  
+EXEC  sp_addlinkedserver  
+      @server='K3Cloud',--被访问的服务器别名   
+      @srvproduct='',  
+      @provider='SQLOLEDB',  
+      @datasrc=@Server   --要访问的服务器  
+EXEC sp_addlinkedsrvlogin   
+     'K3Cloud', --被访问的服务器别名  
+     'false',   
+     NULL,   
+     @UID, --帐号  
+     @PWD --密码  
+     
+     SET @sqlstr='
+select * from(  
+    select convert(bigint, ROW_NUMBER() OVER(order by CreateTime desc)) as RowNo,  
+    convert(bigint, COUNT(0) OVER()) as RowCnt, *  
+    FROM(  
+		SELECT a.[ID]
+			  ,a.[Corp]
+			  ,a.[LoginName]
+			  ,a.[RealName]
+			  ,a.[Password]
+			  ,a.[Mobile]
+			  ,a.[IdCard]
+			  ,a.[Email]
+			  ,a.[WechatOpenid]
+			  ,a.[AlipayOpenid]
+			  ,a.[Weibo]
+			  ,a.[AvailableIP]
+			  ,a.[WeatherCode]
+			  ,a.[VirtualIntegral]
+			  ,a.[RealIntegral]
+			  ,a.[Balance]
+			  ,a.[FrozenBalance]
+			  ,a.[IncomingBalance]
+			  ,a.[Commission]
+			  ,a.[Discount]
+			  ,a.[Province]
+			  ,a.[Area]
+			  ,a.[County]
+			  ,a.[Community]
+			  ,a.[Address]
+			  ,a.[Status]
+			  ,a.[Skin]
+			  ,a.[Grade]
+			  ,a.[Star]
+			  ,a.[Session]
+			  ,a.[LoginTime]
+			  ,a.[LoginIP]
+			  ,a.[LoginAgent]
+			  ,a.[LoginCount]
+			  ,a.[LoginErrorCount]
+			  ,a.[FrozenStartTime]
+			  ,a.[FrozenEndTime]
+			  ,a.[Reserve]
+			  ,a.[Remark]
+			  ,a.[Creator]
+			  ,a.[CreateTime]
+			  ,a.[Auditor]
+			  ,a.[AuditTime]
+			  ,a.[Canceler]
+			  ,a.[CancelTime]
+			  ,b.Supplier
+			  ,d.Fname as SupplierName
+		  FROM [SysOperator] a
+		  LEFT JOIN  SysOperatorSupplier b ON a.id=b.Operator
+		  LEFT JOIN  K3Cloud.['+@DataBase+'].dbo.T_BD_SUPPLIER c ON b.Supplier=c.FSUPPLIERID
+		  LEFT JOIN K3Cloud.['+@DataBase+'].dbo.T_BD_SUPPLIER_L d ON c.FSUPPLIERID=d.FSUPPLIERID
+		  ) AS a where 1=1'
+		   IF @WhereStr<>''
+			BEGIN
+				SET @sqlstr+= @WhereStr
+			END  
+			SET @sqlstr+='
+)  
+AS temp WHERE RowNo  BETWEEN '+CONVERT(VARCHAR, (@PageIndex-1)*@PageSize+1)+' AND '+CONVERT (VARCHAR,@PageIndex*@PageSize)
+
+
+EXEC(@sqlstr)
+--SELECT *,1 AS RowCnt, 1 AS RowNo,'' as Supplier ,'' AS SupplierName FROM [SysOperator]
+go

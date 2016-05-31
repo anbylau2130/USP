@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using USP.Attributes;
 using USP.Bll;
+using USP.Common;
 using USP.Controllers;
 using USP.Models.Entity;
 using USP.Models.POCO;
@@ -50,7 +51,7 @@ namespace USP.Areas.System.Controllers
             string currentPage = Request["page"];
             string pagesize = Request["rows"];
             string name = Request["name"];
-
+            var user = Session[Constants.USER_KEY] as User;
             int page = 1;
             int size = 10;
 

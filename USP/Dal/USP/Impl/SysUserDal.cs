@@ -63,6 +63,11 @@ namespace USP.Dal.Impl
         }
 
 
+        public List<UP_ShowOperatorInfo_Result> GetOperatorPageData(string server, string dataBase, string uID, string pWD, Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
+        {
+           return db.UP_ShowOperatorInfo(server, dataBase, uID, pWD, pageIndex, pageSize, whereStr, strOrder, strOrderType).ToList<UP_ShowOperatorInfo_Result>();
+        }
+
         public int AlterStatus(SysOperator model, long status, long oprid, int type)
         {
             int result = 0;

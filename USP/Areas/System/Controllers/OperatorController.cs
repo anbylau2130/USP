@@ -19,10 +19,17 @@ namespace USP.Areas.System.Controllers
     public class OperatorController : SysPrivilegeController
     {
         ISysOperatorBll operatorBll;
+        ISupplierBll supplierBll;
+        ISupplierGroupBll supplierGroupBll;
+        ISysOperaterSupplierBll sysoperatersupplier;
 
-        public OperatorController(ISysOperatorBll operatorBll)
+        public OperatorController(ISysOperatorBll operatorBll,ISupplierBll supplierBll,ISupplierGroupBll supplierGroupBll,
+            ISysOperaterSupplierBll sysoperatersupplier)
         {
             this.operatorBll = operatorBll;
+            this.supplierBll = supplierBll;
+            this.supplierGroupBll = supplierGroupBll;
+            this.sysoperatersupplier = sysoperatersupplier;
         }
 
         [MenuItem(Parent = "系统维护", Name = "操作员管理", Icon = "glyphicon glyphicon-info-sign")]
@@ -49,11 +56,46 @@ namespace USP.Areas.System.Controllers
                     return GetRoleTree();//加载添加管理员页面的角色tree
                 case "checkname":
                     return CheckName();
+                case "suppliertree":
+                    var temp = GetSupplierGroupTreeNode();
+                    return Json(temp);
                 default:
                     return Content("");
             }
         }
 
+
+        public List<TreeNode> GetSupplierGroupTreeNode(long pid=0)
+        {
+            //先取组
+            List<TreeNode> result = supplierGroupBll.GetSupplierGroupsByPId(pid);
+            if (result.Count == 0)
+            {
+                result = supplierBll.GetSuppliersByGroup(pid);
+            }
+            foreach (var item in result)
+            {
+                item.children = new List<TreeNode>();
+                //组
+                var subgroups = supplierGroupBll.GetSupplierGroupsByPId(item.id);
+                //供应商
+                var subsuppliers = supplierBll.GetSuppliersByGroup(item.id);
+
+                if (subgroups.Count > 0)
+                {
+                    item.children.AddRange(subgroups);
+                    foreach (var sub in subgroups)
+                    {
+                        sub.children= GetSupplierGroupTreeNode(sub.id);
+                    }
+                }
+                else
+                {
+                    item.children.AddRange(subsuppliers);
+                }
+            }
+            return result;
+        }
         private ActionResult GetDataGrid()
         {
             string userName = null;
@@ -82,7 +124,8 @@ namespace USP.Areas.System.Controllers
             var operator1 = (User)HttpContext.Session[Common.Constants.USER_KEY];
             var corp = operator1.SysCorp.ID;
             var operatorID = operator1.SysOperator.ID;
-            var result = operatorBll.GetOperatorGrid(page, rows, "", "", userName, RealName, -1, status, corp, operatorID);
+            var result = operatorBll.GetOperatorPageData( page, rows,  userName, RealName, operator1.SysCorp.ID, status, corp, operatorID.ToString());
+            //var result = operatorBll.GetOperatorGrid(page, rows, "", "", userName, RealName, -1, status, corp, operatorID);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -181,6 +224,51 @@ namespace USP.Areas.System.Controllers
                 return RedirectToAction("Index");
             }
             return View(operators);
+        }
+
+        [Privilege(Menu = "操作员管理", Name = "关联供应商")]
+        public ActionResult RelationSupplier()
+        {
+            var opid = Convert.ToInt64(Request["id"]);
+            var operators = operatorBll.GetOperatorbyId(opid);
+            if (operators != null)
+            {
+                var model = new OperatorSupplier();
+                model.ID = operators.ID;
+                model.LoginName = operators.LoginName;
+                model.RealName = operators.RealName;
+                var relation = sysoperatersupplier.GetSupplierByOperator(operators.ID);
+                if(relation!=null)
+                { 
+                     model.Supplier = relation.Supplier;
+                }
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RelationSupplier(OperatorSupplier model)
+        {
+            var ac = Request["actionName"] ?? "";
+            if (ac != "")
+                return OtherAction(ac);
+            var user = Session[Constants.USER_KEY] as User;
+            var result = sysoperatersupplier.AddOperaterSupplier(new SysOperatorSupplier() { Operator = model.ID, Supplier = model.Supplier, Creator = user.SysOperator.ID });
+         
+            if (!result.IsSuccess)
+            {
+                TempData["returnMsgType"] = "error";
+                TempData["returnMsg"] = result.ProcMsg;
+                return View(model);
+            }
+            TempData["resultMsgType"] = "success";
+            TempData["resultMsg"] = result.ProcMsg;
+            return RedirectToAction("Index");
+
         }
 
         [Privilege(Menu = "操作员管理", Name = "修改")]
