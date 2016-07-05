@@ -15,24 +15,25 @@ using USP.Utility;
 
 namespace USP.Areas.System.Controllers
 {
-    //[Menu(Name = "系统维护", Icon = "glyphicon glyphicon-cog")]
     public class OperatorController : SysPrivilegeController
     {
         ISysOperatorBll operatorBll;
         ISupplierBll supplierBll;
         ISupplierGroupBll supplierGroupBll;
         ISysOperaterSupplierBll sysoperatersupplier;
-
+         IOrganizationBll orgbll;
+       
         public OperatorController(ISysOperatorBll operatorBll,ISupplierBll supplierBll,ISupplierGroupBll supplierGroupBll,
-            ISysOperaterSupplierBll sysoperatersupplier)
+            ISysOperaterSupplierBll sysoperatersupplier, IOrganizationBll orgbll)
         {
             this.operatorBll = operatorBll;
             this.supplierBll = supplierBll;
             this.supplierGroupBll = supplierGroupBll;
             this.sysoperatersupplier = sysoperatersupplier;
+            this.orgbll = orgbll;
         }
 
-        [MenuItem(Parent = "系统维护", Name = "操作员管理", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "系统设置", Name = "员工管理", Icon = "glyphicon glyphicon-user")]
         public ActionResult Index()
         {
             return View();
@@ -52,50 +53,23 @@ namespace USP.Areas.System.Controllers
                     return GetDataGrid();//列表页数据
                 case "Combobox":
                     return GetStatusComboBox();//列表页状态combotree
+                case "orgtree":
+                    
+                    return GetOrganizationTree();
                 case "menutree":
                     return GetRoleTree();//加载添加管理员页面的角色tree
                 case "checkname":
                     return CheckName();
                 case "suppliertree":
-                    var temp = GetSupplierGroupTreeNode();
+                    var org = int.Parse(Request["orgid"]);
+                    var temp = GetSupplierTreeNode(org);
                     return Json(temp);
                 default:
                     return Content("");
             }
         }
 
-
-        public List<TreeNode> GetSupplierGroupTreeNode(long pid=0)
-        {
-            //先取组
-            List<TreeNode> result = supplierGroupBll.GetSupplierGroupsByPId(pid);
-            if (result.Count == 0)
-            {
-                result = supplierBll.GetSuppliersByGroup(pid);
-            }
-            foreach (var item in result)
-            {
-                item.children = new List<TreeNode>();
-                //组
-                var subgroups = supplierGroupBll.GetSupplierGroupsByPId(item.id);
-                //供应商
-                var subsuppliers = supplierBll.GetSuppliersByGroup(item.id);
-
-                if (subgroups.Count > 0)
-                {
-                    item.children.AddRange(subgroups);
-                    foreach (var sub in subgroups)
-                    {
-                        sub.children= GetSupplierGroupTreeNode(sub.id);
-                    }
-                }
-                else
-                {
-                    item.children.AddRange(subsuppliers);
-                }
-            }
-            return result;
-        }
+       
         private ActionResult GetDataGrid()
         {
             string userName = null;
@@ -183,7 +157,7 @@ namespace USP.Areas.System.Controllers
             return Json(result);
         }
 
-        [Privilege(Menu = "操作员管理", Name = "新增")]
+        [Privilege(Menu = "员工管理", Name = "新增")]
         public ActionResult Create()
         {
             var operator1 = (User)HttpContext.Session[Common.Constants.USER_KEY];
@@ -226,7 +200,7 @@ namespace USP.Areas.System.Controllers
             return View(operators);
         }
 
-        [Privilege(Menu = "操作员管理", Name = "关联供应商")]
+        [Privilege(Menu = "员工管理", Name = "关联供应商")]
         public ActionResult RelationSupplier()
         {
             var opid = Convert.ToInt64(Request["id"]);
@@ -238,9 +212,14 @@ namespace USP.Areas.System.Controllers
                 model.LoginName = operators.LoginName;
                 model.RealName = operators.RealName;
                 var relation = sysoperatersupplier.GetSupplierByOperator(operators.ID);
-                if(relation!=null)
+                if (relation!=null)
                 { 
-                     model.Supplier = relation.Supplier;
+                    model.Supplier = relation.Supplier;
+                    long organization;
+                    if (long.TryParse(relation.Reserve, out organization))
+                    {
+                        model.Orgnization = organization;
+                    }
                 }
                 return View(model);
             }
@@ -257,7 +236,7 @@ namespace USP.Areas.System.Controllers
             if (ac != "")
                 return OtherAction(ac);
             var user = Session[Constants.USER_KEY] as User;
-            var result = sysoperatersupplier.AddOperaterSupplier(new SysOperatorSupplier() { Operator = model.ID, Supplier = model.Supplier, Creator = user.SysOperator.ID });
+            var result = sysoperatersupplier.AddOperaterSupplier(new SysOperatorSupplier() { Operator = model.ID, Supplier = model.Supplier, Creator = user.SysOperator.ID,Reserve = model.Orgnization.ToString()});
          
             if (!result.IsSuccess)
             {
@@ -271,7 +250,7 @@ namespace USP.Areas.System.Controllers
 
         }
 
-        [Privilege(Menu = "操作员管理", Name = "修改")]
+        [Privilege(Menu = "员工管理", Name = "修改")]
         public ActionResult Edit()
         {
             var opid = Convert.ToInt64(Request["id"]);
@@ -332,7 +311,7 @@ namespace USP.Areas.System.Controllers
 
         //审核
         [HttpPost]
-        [Privilege(Menu = "操作员管理", Name = "审核")]
+        [Privilege(Menu = "员工管理", Name = "审核")]
         public ActionResult Auditor(long opid)
         {
             var result = new AjaxResult();
@@ -364,7 +343,7 @@ namespace USP.Areas.System.Controllers
 
         //注销
         [HttpPost]
-        [Privilege(Menu = "操作员管理", Name = "注销")]
+        [Privilege(Menu = "员工管理", Name = "注销")]
         public ActionResult Cancel(long opid)
         {
             var result = new AjaxResult();
@@ -396,7 +375,7 @@ namespace USP.Areas.System.Controllers
 
         //激活
         [HttpPost]
-        [Privilege(Menu = "操作员管理", Name = "激活")]
+        [Privilege(Menu = "员工管理", Name = "激活")]
         public ActionResult Active(long opid)
         {
             var result = new AjaxResult();
@@ -427,7 +406,7 @@ namespace USP.Areas.System.Controllers
 
         }
 
-        [Privilege(Menu = "操作员管理", Name = "重置密码")]
+        [Privilege(Menu = "员工管理", Name = "重置密码")]
         public ActionResult ResetPassword(long opid, string newpwd)
         {
             var result = new AjaxResult();
@@ -449,6 +428,94 @@ namespace USP.Areas.System.Controllers
             return Json(result);
 
         }
+
+
+        public List<TreeNode> GetSupplierTreeNode(int orgid)
+        {
+            List< T_BD_SUPPLIERGROUP> supplierGroups = supplierGroupBll.GetAll();
+            List<T_BD_SUPPLIERGROUP_L> supplierGroupL = supplierGroupBll.GetAllLanguage();
+            List<T_BD_SUPPLIER> supplier = supplierBll.GetAll();
+            List<T_BD_SUPPLIER_L> supplierL = supplierBll.GetAllLanguage();
+
+           return GetSupplierGroupTreeNode(supplierGroups, supplierGroupL, supplier, supplierL, orgid);
+        }
+
+        public List<TreeNode> GetSupplierGroupTreeNode(List<T_BD_SUPPLIERGROUP> supplierGroups,
+            List<T_BD_SUPPLIERGROUP_L> supplierGroupL,
+            List<T_BD_SUPPLIER> supplier, List<T_BD_SUPPLIER_L> supplierL, int orgid, long pid = 0 )
+        {
+            //先取组
+            List<TreeNode> result = (from i in supplierGroups
+                                     join iL in supplierGroupL on i.FID equals iL.FID
+                                     where i.FPARENTID == pid 
+                                     select new TreeNode() { id = i.FID, text = i.FNUMBER + "(" + iL.FNAME + ")-组"+i.FID, attributes = new { type = "SupplierGroup" } }
+                                    ).ToList();
+            if (result.Count==0 )
+            {
+               return (   
+                          from i in supplier
+                          join iL in supplierL on i.FSUPPLIERID equals iL.FSUPPLIERID
+                          where i.FPRIMARYGROUP == pid && i.FDOCUMENTSTATUS == "C"&& i.FUSEORGID== orgid
+                          select new TreeNode() { id = i.FSUPPLIERID, text = i.FNUMBER+"(" +iL.FNAME +")-供应商"+i.FSUPPLIERID, attributes = new { type = "Supplier" } }
+                         ).ToList();
+            }
+            foreach (var item in result)
+            {
+                item.children = new List<TreeNode>();
+                item.children.AddRange(GetSupplierGroupTreeNode(supplierGroups, supplierGroupL, supplier, supplierL,orgid, item.id));
+            }
+            return result;
+
+        }
+        private ActionResult GetOrganizationTree()
+        {
+            var org = this.orgbll.GetAll();
+            var orgL = this.orgbll.GetAllLanguage();
+            var result = (from i in org
+                          join j in orgL on i.FORGID equals j.FORGID
+                          where i.FORGID == i.FPARENTID && j.FLOCALEID == 2052
+                          select new TreeNode() { id = i.FORGID, text = i.FNUMBER + "(" + j.FNAME + ")" + i.FORGID }).ToList();
+
+            foreach (var item in result)
+            {
+                var node = GetOrganizationTreeNode(int.Parse(item.id.ToString()), org, orgL);
+                if (node != null)
+                {
+                    item.children = new List<TreeNode>();
+                    item.children.AddRange(node);
+                }
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<TreeNode> GetOrganizationTreeNode(int orgid, List<T_ORG_ORGANIZATIONS> org, List<T_ORG_ORGANIZATIONS_L> orgL)
+        {
+            var result = (from i in org
+                          join j in orgL on i.FORGID equals j.FORGID
+                          where i.FPARENTID == orgid && i.FORGID != i.FPARENTID && j.FLOCALEID == 2052
+                          select new TreeNode() { id = i.FORGID, text = i.FNUMBER + "(" + j.FNAME + ")" + i.FORGID }).ToList();
+
+            if (result.Count == 0)
+            {
+                return null;
+            }
+            foreach (var item in result)
+            {
+                if (item.id == 1)
+                    continue;
+                var node = GetOrganizationTreeNode(int.Parse(item.id.ToString()), org, orgL);
+                if (node != null)
+                {
+                    item.children = new List<TreeNode>();
+                    item.children.AddRange(node);
+                }
+            }
+
+
+            return result;
+        }
+
+
     }
 
 }

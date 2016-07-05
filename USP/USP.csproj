@@ -67,6 +67,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,9 +148,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Supplier\Controllers\OrderController.cs" />
+    <Compile Include="Areas\Supplier\SupplierAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\BankController.cs" />
     <Compile Include="Areas\System\Controllers\ChangePasswordController.cs" />
     <Compile Include="Areas\System\Controllers\CorporationController.cs" />
+    <Compile Include="Areas\System\Controllers\FileUploadController.cs" />
     <Compile Include="Areas\System\Controllers\MenuController.cs" />
     <Compile Include="Areas\System\Controllers\OperatorController.cs" />
     <Compile Include="Areas\System\Controllers\PrivilegeController.cs" />
@@ -163,8 +167,12 @@
     <Compile Include="Areas\System\Controllers\TestController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Attributes\NoFilter.cs" />
+    <Compile Include="Bll\K3CLoud\Impl\K3CloudProcBll.cs" />
+    <Compile Include="Bll\K3CLoud\Impl\OrganizationBll.cs" />
     <Compile Include="Bll\K3CLoud\Impl\SupplierGroupBll.cs" />
     <Compile Include="Bll\K3CLoud\Impl\SupplierBll.cs" />
+    <Compile Include="Bll\K3CLoud\IK3CloudProcBll.cs" />
+    <Compile Include="Bll\K3CLoud\IOrganizationBll.cs" />
     <Compile Include="Bll\K3CLoud\ISupplierBll.cs" />
     <Compile Include="Bll\K3CLoud\ISupplierGroupBll.cs" />
     <Compile Include="Bll\USP\Impl\SysAreaBll.cs" />
@@ -231,7 +239,11 @@
       <DependentUpon>Usp.edmx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OEMController.cs" />
+    <Compile Include="Dal\K3CLoud\Impl\K3CloudProcDal.cs" />
+    <Compile Include="Dal\K3CLoud\Impl\OrganizationsDal.cs" />
     <Compile Include="Dal\K3CLoud\Impl\SupplierGroupDal.cs" />
+    <Compile Include="Dal\K3CLoud\IK3CloudProcDal.cs" />
+    <Compile Include="Dal\K3CLoud\IOrganizationsDal.cs" />
     <Compile Include="Dal\K3CLoud\ISupplierGroupDal.cs" />
     <Compile Include="Dal\K3CLoud\Impl\SupplierDal.cs" />
     <Compile Include="Dal\K3CLoud\ISupplierDal.cs" />
@@ -330,6 +342,27 @@
     <Compile Include="Models\Entity\T_BD_SUPPLIER_L.cs">
       <DependentUpon>K3Cloud.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity\T_ORG_ORGANIZATIONS.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\T_ORG_ORGANIZATIONS_L.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\UP_ShowOrder_Result.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\UP_ShowPaymentOrder_Result.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\UP_ShowStockIn_Result.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\UP_ShowSuppilerAccount1_Result.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity\UP_ShowSuppilerAccount_Result.cs">
+      <DependentUpon>K3Cloud.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\POCO\BankAddEdit.cs" />
     <Compile Include="Models\POCO\BankType.cs" />
     <Compile Include="Models\POCO\Bank_Extend.cs" />
@@ -402,6 +435,12 @@
       <DependentUpon>K3CloudGenMetadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModel\T_BD_SUPPLIER_LMetaData.cs">
+      <DependentUpon>K3CloudGenMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\T_ORG_ORGANIZATIONSMetaData.cs">
+      <DependentUpon>K3CloudGenMetadata.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\T_ORG_ORGANIZATIONS_LMetaData.cs">
       <DependentUpon>K3CloudGenMetadata.tt</DependentUpon>
     </Compile>
     <Compile Include="Service\IDropDownListService.cs" />
@@ -477,9 +516,13 @@
       <DependentUpon>K3Cloud.edmx</DependentUpon>
       <LastGenOutput>K3Cloud.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Db\Add_FK.sql" />
-    <Content Include="Db\Remove_FK.sql" />
-    <Content Include="Db\USP_procedure.sql" />
+    <Content Include="Db\USP_BASE\Add_FK.sql" />
+    <Content Include="Db\USP_BASE\Remove_FK.sql" />
+    <Content Include="Db\USP_ATTACH_PROC.sql" />
+    <Content Include="Db\USP_ATTACH_TABLE.sql" />
+    <Content Include="Db\USP_BASE\USP_BASE_PROC.sql" />
+    <Content Include="Db\USP_BASE\USP_procedure.sql" />
+    <Content Include="Db\USP_BASE\清空usp测试数据.sql" />
     <Content Include="Models\Entity\K3Cloud.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>K3Cloud.cs</LastGenOutput>
@@ -491,6 +534,8 @@
     <Content Include="Static\Css\bootstrap.css" />
     <Content Include="Static\Css\bootstrap.min.css" />
     <Content Include="Static\Css\datepicker.css" />
+    <Content Include="Static\Css\fileinput.min.css" />
+    <Content Include="Static\Css\font-awesome.min.css" />
     <Content Include="Static\Css\jquery-confirm.min.css" />
     <Content Include="Static\Css\select2.min.css" />
     <Content Include="Static\Css\themes\black\accordion.css" />
@@ -773,6 +818,7 @@
     <Content Include="Static\Css\themes\metro\window.css" />
     <Content Include="Static\Css\themes\mobile.css" />
     <Content Include="Static\Css\toastr.min.css" />
+    <Content Include="Static\Css\usp\usp.login.css" />
     <Content Include="Static\Css\usp\usp.operator.relationsupplier.css" />
     <Content Include="Static\Css\usp\usp.bank.css" />
     <Content Include="Static\Css\usp\usp.changepassword.css" />
@@ -783,14 +829,17 @@
     <Content Include="Static\Css\usp\usp.corporation.editcorporation.css" />
     <Content Include="Static\Css\usp\usp.oem.css" />
     <Content Include="Static\Css\usp\usp.home.css" />
-    <Content Include="Db\USP_table.sql" />
-    <Content Include="Db\USP_Get_Add_FK.sql" />
-    <Content Include="Db\USP_init.sql" />
-    <Content Include="Db\USP_Get_Remove_FK.sql" />
+    <Content Include="Db\USP_BASE\USP_BASE_TABLE.sql" />
+    <Content Include="Db\USP_BASE\USP_Get_Add_FK.sql" />
+    <Content Include="Db\USP_BASE\USP_BASE_INIT.sql" />
+    <Content Include="Db\USP_BASE\USP_Get_Remove_FK.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Static\Css\Site.css" />
     <Content Include="Static\Css\usp\usp.operator.css" />
+    <Content Include="Static\Css\usp\usp.order.paymentorderlist.css" />
+    <Content Include="Static\Css\usp\usp.order.stockinlist.css" />
+    <Content Include="Static\Css\usp\usp.order.supplieramount.css" />
     <Content Include="Static\Css\usp\usp.privilegeTemplate.addPrivilegeTemplate.css" />
     <Content Include="Static\Css\usp\usp.privilegeTemplate.auditorPrivilegeTemplate.css" />
     <Content Include="Static\Css\usp\usp.privilegeTemplate.privilegeTemplates.css" />
@@ -800,10 +849,17 @@
     <Content Include="Static\Css\usp\usp.system.menutemplate.css" />
     <Content Include="Static\Css\usp\usp.system.sysloginlog.css" />
     <Content Include="Static\Css\usp\usp.system.sysoperator.css" />
+    <Content Include="Static\fonts\fontawesome-webfont.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Static\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Static\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Static\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Static\Img\0.jpg" />
+    <Content Include="Static\Img\ilogo2.png" />
     <Content Include="Static\Js\bootstrap-datepicker.js" />
     <Content Include="Static\Js\bootstrap-datetimepicker.js" />
-    <Content Include="Static\Js\bootstrap.js" />
-    <Content Include="Static\Js\bootstrap.min.js" />
     <Content Include="App_Data\log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -811,6 +867,8 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Static\Js\bootstrap.js" />
+    <Content Include="Static\Js\bootstrap.min.js" />
     <Content Include="Static\Js\easyloader.js" />
     <Content Include="Areas\System\Views\web.config" />
     <Content Include="Areas\System\Views\_ViewStart.cshtml" />
@@ -872,8 +930,29 @@
       <DependentUpon>K3Cloud.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\System\Views\Operator\RelationSupplier.cshtml" />
+    <Content Include="Areas\Supplier\Views\web.config" />
+    <Content Include="Areas\Supplier\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Supplier\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Supplier\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Supplier\Views\Order\StockInList.cshtml" />
+    <Content Include="Areas\Supplier\Views\Order\PaymentOrderList.cshtml" />
+    <Content Include="Areas\Supplier\Views\Order\SupplierAmount.cshtml" />
     <None Include="Properties\PublishProfiles\NewU.pubxml" />
+    <Content Include="Static\fonts\fontawesome-webfont.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\fonts\fontawesome-webfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\fonts\fontawesome-webfont.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Static\fonts\FontAwesome.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Static\Js\jquery-1.11.1.intellisense.js" />
+    <Content Include="Static\Js\fileinput.min.js" />
+    <Content Include="Static\Js\fileinput_locale_zh.js" />
     <Content Include="Static\Js\jquery-1.11.1.js" />
     <Content Include="Static\Js\jquery-1.11.1.min.js" />
     <Content Include="Static\Js\jquery-1.11.1.min.map" />
@@ -922,6 +1001,9 @@
     <Content Include="Static\Js\usp\usp.corporation.editcorporation.js" />
     <Content Include="Static\Js\usp\usp.home.js" />
     <Content Include="Static\Js\usp\usp.oem.js" />
+    <Content Include="Static\Js\usp\usp.order.paymentorderlist.js" />
+    <Content Include="Static\Js\usp\usp.order.stockinlist.js" />
+    <Content Include="Static\Js\usp\usp.order.supplieramount.js" />
     <Content Include="Static\Js\usp\usp.privilegeTemplate.addPrivilegeTemplate.js" />
     <Content Include="Static\Js\usp\usp.privilegeTemplate.auditorPrivilegeTemplate.js" />
     <Content Include="Static\Js\usp\usp.privilegeTemplate.privilegeTemplates.js" />
@@ -965,11 +1047,14 @@
     <Content Include="Views\Error\Http401.cshtml" />
     <Content Include="Views\OEM\Index.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
+    <Content Include="Static\Css\usp\usp.order.index.css" />
+    <Content Include="Static\Js\usp\usp.order.index.js" />
+    <Content Include="Template\usp.index.cst" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Supplier\Models\" />
     <Folder Include="Areas\System\Models\" />
-    <Folder Include="Static\fonts\" />
-    <Folder Include="Static\Img\" />
+    <Folder Include="obj\" />
     <Folder Include="Views\AuthorizeTest\" />
   </ItemGroup>
   <ItemGroup>

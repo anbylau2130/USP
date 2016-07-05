@@ -27,7 +27,11 @@ namespace USP.Dal.Impl
             return groupresult.ToList();
         }
 
+        public List<T_BD_SUPPLIERGROUP_L> GetAllLanguage()
+        {
+            return db.T_BD_SUPPLIERGROUP_L.ToList();
+        }
 
-        
+
     }
 }

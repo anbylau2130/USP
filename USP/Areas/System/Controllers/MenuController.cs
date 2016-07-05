@@ -23,7 +23,7 @@ namespace USP.Areas.System.Controllers
             this.sysPrivilegeBll = sysPrivilegeBll;
         }
 
-        [MenuItem(Parent = "系统数据", Name = "菜单管理", Icon = "glyphicon glyphicon-list")]
+        [MenuItem(Parent = "系统设置", Name = "菜单管理", Icon = "glyphicon glyphicon-list")]
         [HttpGet]
         public ActionResult Index()
         {

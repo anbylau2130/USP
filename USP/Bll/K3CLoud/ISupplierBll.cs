@@ -14,5 +14,6 @@ namespace USP.Bll
 
         T_BD_SUPPLIER GetSupplierByOperatorId(long id);
 
+        List<T_BD_SUPPLIER_L> GetAllLanguage();
     }
 }

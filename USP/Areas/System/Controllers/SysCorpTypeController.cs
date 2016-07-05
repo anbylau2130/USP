@@ -20,7 +20,7 @@ namespace USP.Areas.System.Controllers
             this.sysCorpTypeBll = sysCorpTypeBll;
         }
 
-        [MenuItem(Parent = "系统维护", Name = "公司类型管理", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "公司管理", Name = "公司类型", Icon = "icon-leaf")]
         [HttpGet]
         public ActionResult Index()
         {
@@ -80,7 +80,7 @@ namespace USP.Areas.System.Controllers
             return Json(sysCorpTypeBll.IsExisName(id, name), JsonRequestBehavior.AllowGet);
         }
 
-        [Privilege(Menu = "公司类型管理", Name = "添加")]
+        [Privilege(Menu = "公司类型", Name = "添加")]
         [HttpGet]
         public ActionResult Add()
         {
@@ -90,7 +90,7 @@ namespace USP.Areas.System.Controllers
             return View(new SysCorpType());
         }
 
-        [Privilege(Menu = "公司类型管理", Name = "编辑")]
+        [Privilege(Menu = "公司类型", Name = "编辑")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -166,14 +166,14 @@ namespace USP.Areas.System.Controllers
             }
         }
 
-        [Privilege(Menu = "公司类型管理", Name = "注销")]
+        [Privilege(Menu = "公司类型", Name = "注销")]
         [HttpPost]
         public ActionResult Cancel(int id)
         {
             return Json(sysCorpTypeBll.Cancel(id, ((User)HttpContext.Session[Common.Constants.USER_KEY]).SysOperator.ID));
         }
 
-        [Privilege(Menu = "公司类型管理", Name = "激活")]
+        [Privilege(Menu = "公司类型", Name = "激活")]
         [HttpPost]
         public ActionResult Active(int id)
         {

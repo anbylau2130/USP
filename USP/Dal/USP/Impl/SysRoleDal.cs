@@ -115,7 +115,16 @@ namespace USP.Dal.Impl
         {
             try
             {
-                var role = _db.SysRole.Where(x => x.Corp == corpid&&x.Canceler==null&&x.CancelTime==null&&x.Type==false).ToList();
+                var role =new List<SysRole>();
+                if (corpid==0)
+                {
+                    role = _db.SysRole.Where(x =>  x.Canceler == null && x.CancelTime == null &&x.Type).ToList();
+                }
+                else
+                {
+                    role = _db.SysRole.Where(x => x.Corp == corpid&&x.Canceler==null&&x.CancelTime==null&&x.Type==false).ToList();
+
+                }
                 return role;
             }
             catch (Exception ex)

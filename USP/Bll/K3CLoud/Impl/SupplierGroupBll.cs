@@ -21,6 +21,13 @@ namespace USP.Bll.Impl
         {
            return supplierGroupDal.GetAll();
         }
+
+        public List<T_BD_SUPPLIERGROUP_L> GetAllLanguage()
+        {
+            return supplierGroupDal.GetAllLanguage();
+          
+        }
+
         public List<TreeNode> GetSupplierGroupsByPId(long id)
         {
             return supplierGroupDal.GetSupplierGroupsByPId(id);

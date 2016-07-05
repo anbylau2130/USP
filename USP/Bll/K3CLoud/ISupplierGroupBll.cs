@@ -10,6 +10,7 @@ namespace USP.Bll
     public interface ISupplierGroupBll
     {
         List<T_BD_SUPPLIERGROUP> GetAll();
+        List<T_BD_SUPPLIERGROUP_L> GetAllLanguage();
         List<TreeNode> GetSupplierGroupsByPId(long id);
     }
 }

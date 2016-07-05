@@ -26,7 +26,7 @@ namespace USP.Areas.System.Controllers
             this.sysCorpTypeBll = sysCorpTypeBll;
         }
 
-        [MenuItem(Parent = "系统数据", Name = "菜单模板", Icon = "glyphicon glyphicon-list")]
+        [MenuItem(Parent = "系统设置", Name = "菜单模板", Icon = "icon-file-alt")]
         [HttpGet]
         public ActionResult Index()
         {

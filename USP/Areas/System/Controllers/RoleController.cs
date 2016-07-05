@@ -21,7 +21,7 @@ namespace USP.Areas.System.Controllers
         }
 
         [HttpGet]
-        [MenuItem(Name = "角色管理", Parent = "系统维护", Icon = "glyphicon glyphicon-user")]
+        [MenuItem(Name = "角色管理", Parent = "系统设置", Icon = "icon-eye-open")]
         public ActionResult Index()
         {
             return View();

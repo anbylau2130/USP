@@ -88,8 +88,6 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(6, ErrorMessage = "最多可输入6个字符")]
-        [Required]
         [Display(Name = "邮编")]
         public virtual string Postcode
         {
@@ -97,8 +95,6 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(32, ErrorMessage = "最多可输入32个字符")]
-        [Required]
         [Display(Name = "传真号")]
         public virtual string Faxcode
         {
@@ -106,8 +102,6 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
-        [Required]
         [Display(Name = "联系人")]
         public virtual string Linkman
         {
@@ -115,8 +109,6 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(32, ErrorMessage = "最多可输入32个字符")]
-        [Required]
         [Display(Name = "联系手机")]
         [Phone]
         public virtual string Mobile
@@ -125,18 +117,13 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(10, ErrorMessage = "最多可输入10个字符")]
-        [Required]
         [Display(Name = "Email")]
-        [EmailAddress]
         public virtual string Email
         {
             get;
             set;
         }
 
-        [StringLength(50, ErrorMessage = "最多可输入50个字符")]
-        [Required]
         [Display(Name = "联系QQ")]
         public virtual string Qq
         {
@@ -144,8 +131,6 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
-        [Required]
         [Display(Name = "微信")]
         public virtual string Wechat
         {
@@ -153,8 +138,6 @@ namespace USP.Models.ViewModel
             set;
         }
 
-        [StringLength(100, ErrorMessage = "最多可输入100个字符")]
-        [Required]
         [Display(Name = "微博")]
         public virtual string Weibo
         {

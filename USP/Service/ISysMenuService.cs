@@ -13,5 +13,8 @@ namespace USP.Service
         List<SysMenu> getMenuByOperator(long @operator);
         void addMenu(string name, string icon);
         void addMenuItem(string parent, string name, string icon, string @class, string area, string controller, string action, string parameter, string url);
+
+        int AssignMenu();
+
     }
 }

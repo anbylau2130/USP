@@ -30,7 +30,7 @@ namespace USP.Bll
         SysOperator GetOperatorbyLoginName(string name);
         List<TreeNode> GetUserRoleTree(long corp, long? opid);
         ProcResult EditOperator(OperaterAddEdit model);
-        List<UP_ShowOperatorInfo_Result> GetOperatorPageData( int? pageIndex, int? pageSize, string userName, string RealName, long status, long corp, long operatorID, string strOrder = "", string strOrderType = "");
+        DataGrid<UP_ShowOperatorInfo_Result> GetOperatorPageData( int? pageIndex, int? pageSize, string userName, string RealName, long status, long corp, long operatorID, string strOrder = "", string strOrderType = "");
        // List<UP_ShowOperatorInfo_Result> GetOperatorPageData(string server, string dataBase, string uID, string pWD, Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType);
        
     }

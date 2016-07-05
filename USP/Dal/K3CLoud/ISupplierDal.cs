@@ -13,6 +13,7 @@ namespace USP.Dal
          List<TreeNode> GetSuppliersByGroup(long id);
 
         T_BD_SUPPLIER GetSupplierByOperatorId(long id);
+        List<T_BD_SUPPLIER_L> GetAllLanguage();
 
     }
 }

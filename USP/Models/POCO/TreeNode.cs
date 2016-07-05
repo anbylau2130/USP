@@ -13,5 +13,11 @@ namespace USP.Models.POCO
         public bool @checked { get; set; }
         public object attributes { get; set; }
         public List<TreeNode> children { get; set; }
+        public string iconCls
+        {
+            get;
+            set;
+        }
+    
     }
 }

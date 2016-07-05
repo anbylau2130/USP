@@ -13,6 +13,8 @@ namespace USP.Context
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class K3CloudEntities : DbContext
     {
@@ -30,5 +32,119 @@ namespace USP.Context
         public virtual DbSet<T_BD_SUPPLIER_L> T_BD_SUPPLIER_L { get; set; }
         public virtual DbSet<T_BD_SUPPLIERGROUP> T_BD_SUPPLIERGROUP { get; set; }
         public virtual DbSet<T_BD_SUPPLIERGROUP_L> T_BD_SUPPLIERGROUP_L { get; set; }
+        public virtual DbSet<T_ORG_ORGANIZATIONS> T_ORG_ORGANIZATIONS { get; set; }
+        public virtual DbSet<T_ORG_ORGANIZATIONS_L> T_ORG_ORGANIZATIONS_L { get; set; }
+    
+        public virtual ObjectResult<UP_ShowOrder_Result> UP_ShowOrder(Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
+        {
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var whereStrParameter = whereStr != null ?
+                new ObjectParameter("WhereStr", whereStr) :
+                new ObjectParameter("WhereStr", typeof(string));
+    
+            var strOrderParameter = strOrder != null ?
+                new ObjectParameter("strOrder", strOrder) :
+                new ObjectParameter("strOrder", typeof(string));
+    
+            var strOrderTypeParameter = strOrderType != null ?
+                new ObjectParameter("strOrderType", strOrderType) :
+                new ObjectParameter("strOrderType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowOrder_Result>("UP_ShowOrder", pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
+        }
+    
+        public virtual ObjectResult<UP_ShowStockIn_Result> UP_ShowStockIn(Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
+        {
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var whereStrParameter = whereStr != null ?
+                new ObjectParameter("WhereStr", whereStr) :
+                new ObjectParameter("WhereStr", typeof(string));
+    
+            var strOrderParameter = strOrder != null ?
+                new ObjectParameter("strOrder", strOrder) :
+                new ObjectParameter("strOrder", typeof(string));
+    
+            var strOrderTypeParameter = strOrderType != null ?
+                new ObjectParameter("strOrderType", strOrderType) :
+                new ObjectParameter("strOrderType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowStockIn_Result>("UP_ShowStockIn", pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
+        }
+    
+        public virtual ObjectResult<UP_ShowPaymentOrder_Result> UP_ShowPaymentOrder(Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
+        {
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var whereStrParameter = whereStr != null ?
+                new ObjectParameter("WhereStr", whereStr) :
+                new ObjectParameter("WhereStr", typeof(string));
+    
+            var strOrderParameter = strOrder != null ?
+                new ObjectParameter("strOrder", strOrder) :
+                new ObjectParameter("strOrder", typeof(string));
+    
+            var strOrderTypeParameter = strOrderType != null ?
+                new ObjectParameter("strOrderType", strOrderType) :
+                new ObjectParameter("strOrderType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowPaymentOrder_Result>("UP_ShowPaymentOrder", pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
+        }
+    
+        public virtual ObjectResult<UP_ShowSuppilerAccount_Result> UP_ShowSuppilerAccount(string supplier, Nullable<System.DateTime> bDATE, Nullable<System.DateTime> eDATE, Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
+        {
+            var supplierParameter = supplier != null ?
+                new ObjectParameter("supplier", supplier) :
+                new ObjectParameter("supplier", typeof(string));
+    
+            var bDATEParameter = bDATE.HasValue ?
+                new ObjectParameter("BDATE", bDATE) :
+                new ObjectParameter("BDATE", typeof(System.DateTime));
+    
+            var eDATEParameter = eDATE.HasValue ?
+                new ObjectParameter("EDATE", eDATE) :
+                new ObjectParameter("EDATE", typeof(System.DateTime));
+    
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var whereStrParameter = whereStr != null ?
+                new ObjectParameter("WhereStr", whereStr) :
+                new ObjectParameter("WhereStr", typeof(string));
+    
+            var strOrderParameter = strOrder != null ?
+                new ObjectParameter("strOrder", strOrder) :
+                new ObjectParameter("strOrder", typeof(string));
+    
+            var strOrderTypeParameter = strOrderType != null ?
+                new ObjectParameter("strOrderType", strOrderType) :
+                new ObjectParameter("strOrderType", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowSuppilerAccount_Result>("UP_ShowSuppilerAccount", supplierParameter, bDATEParameter, eDATEParameter, pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
+        }
     }
 }

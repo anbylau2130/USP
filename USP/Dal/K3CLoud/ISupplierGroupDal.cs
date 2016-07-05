@@ -12,5 +12,6 @@ namespace USP.Dal
     {
             List<T_BD_SUPPLIERGROUP> GetAll();
             List<TreeNode> GetSupplierGroupsByPId(long id);
+            List<T_BD_SUPPLIERGROUP_L> GetAllLanguage();
     }
 }

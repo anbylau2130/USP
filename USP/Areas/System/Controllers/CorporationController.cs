@@ -16,10 +16,11 @@ using USP.Models.POCO;
 using USP.Service;
 using System.Text;
 using USP.Bll.Impl;
+using USP.Utility;
 
 namespace USP.Areas.System.Controllers
 {
-    [Menu(Name = "公司管理", Icon = "glyphicon glyphicon-cog")]
+    [Menu(Name = "公司管理", Icon = "icon-building")]
     public class CorporationController : SysPrivilegeController
     {
         ISysCorpBll sysCorpBll;
@@ -27,6 +28,7 @@ namespace USP.Areas.System.Controllers
         IDropDownListService dropDownListService;
         ISysCorpStatusBll sysCorpStatusBll;
         ISupplierBll supplierBll;
+
         public CorporationController(ISysCorpBll sysCorpBll, IDropDownListService dropDownListService, ISysCorpStatusBll sysCorpStatusBll, ISupplierBll supplierBll)
         {
             this.sysCorpBll = sysCorpBll;
@@ -36,7 +38,7 @@ namespace USP.Areas.System.Controllers
             this.supplierBll = supplierBll;
         }
 
-        [MenuItem(Parent = "公司管理", Name = "公司列表", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "公司管理", Name = "公司列表", Icon = "icon-sitemap")]
         public ActionResult Corporations()
         {
             return View();
@@ -164,7 +166,7 @@ namespace USP.Areas.System.Controllers
         }
 
 
-        [MenuItem(Parent = "公司管理", Name = "公司信息", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "公司管理", Name = "公司信息", Icon = "icon-home")]
         [Privilege(Menu = "公司信息", Name = "修改")]
         public ActionResult Information()
         {

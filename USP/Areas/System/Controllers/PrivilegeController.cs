@@ -22,7 +22,7 @@ namespace USP.Areas.System.Controllers
         }
 
         [HttpGet]
-        [MenuItem(Parent = "系统数据", Name = "权限管理", Icon = "glyphicon glyphicon-lock")]
+        [MenuItem(Parent = "系统设置", Name = "权限管理", Icon = "glyphicon glyphicon-lock")]
         public ActionResult Index()
         {
             return View();

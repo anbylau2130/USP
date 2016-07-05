@@ -16,7 +16,7 @@ namespace USP.Dal.Impl
         {
             try
             {
-                var result = db.UP_AddOperaterSupplier(model.Operator, model.Supplier, model.Creator).FirstOrDefault();
+                var result = db.UP_AddOperaterSupplier(model.Operator, model.Supplier, model.Creator,long.Parse(model.Reserve)).FirstOrDefault();
 
                 return new ProcResult()
                 {

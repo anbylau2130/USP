@@ -32,6 +32,17 @@
                 </div>
             </div>
 
+
+            <div class="form-group">
+                <label class="control-label col-md-2">K3Cloud组织名称</label>
+                <div class="col-md-10">
+                    <div class="tree-role col-md-4">
+                        <input id="k3orgnizations" width="250" />
+                        <input type="hidden" id="hdorgnizations" name="Orgnization" data-val="true" value="" data-val-required="请选择供应商" />
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label class="control-label col-md-2">供应商</label>
                 <div class="col-md-10">
@@ -58,20 +69,35 @@
     <script>
         $(function () {
             usp.init();
-            $('#operatorSupplier').combotree({
+            $('#operatorSupplier').combotree();
+            $("#k3orgnizations").combotree({
                 method: 'post',
-                width:290,
-                queryParams: { actionName: 'suppliertree'},
+                width: 290,
+                queryParams: { actionName: 'orgtree' },
                 url: '/System/Operator/RelationSupplier',
                 required: true,
                 onChange: function (newValue, oldValue) {
-                    $("#hdsupplier").val(newValue)
+                    $("#hdorgnizations").val(newValue);
+                    $('#operatorSupplier').combotree({
+                        method: 'post',
+                        width: 290,
+                        queryParams: { actionName: 'suppliertree', orgid: newValue },
+                        url: '/System/Operator/RelationSupplier',
+                        required: true,
+                        onChange: function (newValue, oldValue) {
+                            $("#hdsupplier").val(newValue);
+                        },
+                        onLoadSuccess: function (node, data) {
+                            if ("@Model.Supplier" != '') {
+                                $('#operatorSupplier').combotree('setValue', '@Model.Supplier');
+                            }
+                        }
+                    });
                 },
                 onLoadSuccess: function (node, data) {
-                        @*node=$('#operatorSupplier').combotree('tree').tree('find',@Model.Supplier);
-                        $('#operatorSupplier').combotree('tree').tree('check',node.target);
-                        $('#operatorSupplier').combotree('tree').tree('expandAll', node.target);*@
-                    $('#operatorSupplier').combotree('setValue', @Model.Supplier);
+                    if ("@Model.Orgnization" != '') {
+                        $('#k3orgnizations').combotree('setValue', '@Model.Orgnization');
+                    }
                 }
             });
 

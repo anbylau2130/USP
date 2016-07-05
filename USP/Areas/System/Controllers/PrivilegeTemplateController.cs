@@ -26,7 +26,7 @@ namespace USP.Areas.System.Controllers
             this.sysCorpTypeBll = sysCorpTypeBll;
         }
 
-        [MenuItem(Parent = "系统数据", Name = "权限模板", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "系统设置", Name = "权限模板", Icon = "icon-file-alt")]
         public ActionResult PrivilegeTemplates()
         {
             return View();

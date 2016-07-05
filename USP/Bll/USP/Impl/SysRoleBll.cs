@@ -137,8 +137,16 @@ namespace USP.Bll.Impl
         public DataGrid<SysRoleExt> GetSysRolePageByCorp(int page, int pagesize, long corp, string roleName)
         {
             var result = new DataGrid<SysRoleExt>();
-
-            var strWhere = "ID>0 and Corp=" + corp;
+            var strWhere = string.Empty;
+            if (corp == 0)
+            {
+                strWhere = " ID>=0 and type=1 ";
+            }
+            else
+            {
+                strWhere = "ID>0 and Corp=" + corp;
+            }
+         
             if (!string.IsNullOrWhiteSpace(roleName) && Util.IsSafeSqlString(roleName.Trim()))
             {
                 strWhere += " and Name like '%" + roleName + "%' ";

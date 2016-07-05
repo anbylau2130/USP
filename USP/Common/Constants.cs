@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +23,14 @@ namespace USP.Common
         public static string DB_UID = System.Configuration.ConfigurationManager.AppSettings["DBUID"].ToString();
         public static string DB_PWD = System.Configuration.ConfigurationManager.AppSettings["DBPWD"].ToString();
 
+        public  static  List<string> Skins=new List< string>()
+        {
+          " ~/Static/Css/themes/bootstrap/easyui.css",
+           " ~/Static/Css/themes/black/easyui.css",
+            " ~/Static/Css/themes/default/easyui.css",
+           " ~/Static/Css/themes/gray/easyui.css",
+            " ~/Static/Css/themes/metro/easyui.css"
+        }; 
 
 
     }
@@ -57,6 +66,16 @@ namespace USP.Common
         public static bool IsIP(string ip)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+        }
+
+        public static string SkinRender()
+        {
+            var currentUser = HttpContext.Current.Session[Constants.USER_KEY] as USP.Models.POCO.User;
+            if (currentUser.SysOperator.Skin != 0)
+            {
+                return Constants.Skins[(int) currentUser.SysOperator.Skin];
+            }
+            return Constants.Skins[0];
         }
     }
 }

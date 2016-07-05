@@ -33,7 +33,12 @@ namespace USP.Bll.Impl
         {
             return supplierDal.GetSuppliersByGroup(id);
         }
-       
 
+        public List<T_BD_SUPPLIER_L> GetAllLanguage()
+        {
+            return supplierDal.GetAllLanguage();
+        }
+
+        
     }
 }

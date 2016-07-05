@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="K3CloudModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="K3CloudModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="T_BD_SUPPLIER">
           <Key>
             <PropertyRef Name="FSUPPLIERID" />
@@ -61,14 +61,92 @@
           <Property Name="FNAME" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="FDESCRIPTION" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="T_ORG_ORGANIZATIONS">
+          <Key>
+            <PropertyRef Name="FORGID" />
+          </Key>
+          <Property Name="FORGID" Type="int" Nullable="false" />
+          <Property Name="FNUMBER" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="FORGFORMID" Type="int" Nullable="false" />
+          <Property Name="FCONTACT" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FTEL" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FADDRESS" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FORGFUNCTIONS" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FISACCOUNTORG" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FISBUSINESSORG" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FACCTORGTYPE" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="FPARENTID" Type="int" Nullable="false" />
+          <Property Name="FCREATORID" Type="int" Nullable="false" />
+          <Property Name="FCREATEDATE" Type="datetime" />
+          <Property Name="FMODIFIERID" Type="int" Nullable="false" />
+          <Property Name="FMODIFYDATE" Type="datetime" />
+          <Property Name="FFORBIDSTATUS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FFORBIDORID" Type="int" Nullable="false" />
+          <Property Name="FFORBIDDATE" Type="datetime" />
+          <Property Name="FDOCUMENTSTATUS" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FISSYSPRESET" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="FAUDITORID" Type="int" Nullable="false" />
+          <Property Name="FAUDITDATE" Type="datetime" />
+          <Property Name="FACCTGRANGEID" Type="int" />
+          <Property Name="FVALUATIONMETHOD" Type="varchar" MaxLength="20" />
+          <Property Name="FACCTGORGID" Type="int" />
+          <Property Name="FACCTGSYSTEMID" Type="int" />
+          <Property Name="FDIVIDEDBASIS" Type="varchar" MaxLength="20" />
+          <Property Name="FACCTPOLICYID" Type="int" />
+          <Property Name="FPOSTCODE" Type="varchar" MaxLength="30" />
+          <Property Name="FPOINTSRATE" Type="decimal" Precision="23" Scale="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_ORG_ORGANIZATIONS_L">
+          <Key>
+            <PropertyRef Name="FPKID" />
+          </Key>
+          <Property Name="FPKID" Type="int" Nullable="false" />
+          <Property Name="FORGID" Type="int" Nullable="false" />
+          <Property Name="FLOCALEID" Type="int" Nullable="false" />
+          <Property Name="FNAME" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FDESCRIPTION" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FADDRESS" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Function Name="UP_ShowOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="WhereStr" Type="nvarchar" Mode="In" />
+          <Parameter Name="strOrder" Type="varchar(max)" Mode="In" />
+          <Parameter Name="strOrderType" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UP_ShowPaymentOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="WhereStr" Type="nvarchar" Mode="In" />
+          <Parameter Name="strOrder" Type="varchar(max)" Mode="In" />
+          <Parameter Name="strOrderType" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UP_ShowStockIn" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="WhereStr" Type="nvarchar" Mode="In" />
+          <Parameter Name="strOrder" Type="varchar(max)" Mode="In" />
+          <Parameter Name="strOrderType" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UP_ShowSuppilerAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="supplier" Type="varchar(max)" Mode="In" />
+          <Parameter Name="BDATE" Type="datetime" Mode="In" />
+          <Parameter Name="EDATE" Type="datetime" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="WhereStr" Type="nvarchar" Mode="In" />
+          <Parameter Name="strOrder" Type="varchar(max)" Mode="In" />
+          <Parameter Name="strOrderType" Type="varchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="K3CloudModelStoreContainer">
           <EntitySet Name="T_BD_SUPPLIER" EntityType="Self.T_BD_SUPPLIER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_BD_SUPPLIER_L" EntityType="Self.T_BD_SUPPLIER_L" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_BD_SUPPLIERGROUP" EntityType="Self.T_BD_SUPPLIERGROUP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="T_BD_SUPPLIERGROUP_L" EntityType="Self.T_BD_SUPPLIERGROUP_L" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ORG_ORGANIZATIONS" EntityType="Self.T_ORG_ORGANIZATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_ORG_ORGANIZATIONS_L" EntityType="Self.T_ORG_ORGANIZATIONS_L" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="K3CloudModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -133,7 +211,208 @@
           <EntitySet Name="T_BD_SUPPLIER_L" EntityType="Self.T_BD_SUPPLIER_L" />
           <EntitySet Name="T_BD_SUPPLIERGROUP" EntityType="Self.T_BD_SUPPLIERGROUP" />
           <EntitySet Name="T_BD_SUPPLIERGROUP_L" EntityType="Self.T_BD_SUPPLIERGROUP_L" />
+          <FunctionImport Name="UP_ShowOrder" ReturnType="Collection(K3CloudModel.UP_ShowOrder_Result)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="WhereStr" Mode="In" Type="String" />
+            <Parameter Name="strOrder" Mode="In" Type="String" />
+            <Parameter Name="strOrderType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_ShowStockIn" ReturnType="Collection(K3CloudModel.UP_ShowStockIn_Result)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="WhereStr" Mode="In" Type="String" />
+            <Parameter Name="strOrder" Mode="In" Type="String" />
+            <Parameter Name="strOrderType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UP_ShowPaymentOrder" ReturnType="Collection(K3CloudModel.UP_ShowPaymentOrder_Result)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="WhereStr" Mode="In" Type="String" />
+            <Parameter Name="strOrder" Mode="In" Type="String" />
+            <Parameter Name="strOrderType" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="T_ORG_ORGANIZATIONS" EntityType="K3CloudModel.T_ORG_ORGANIZATIONS" />
+          <EntitySet Name="T_ORG_ORGANIZATIONS_L" EntityType="K3CloudModel.T_ORG_ORGANIZATIONS_L" />
+          <FunctionImport Name="UP_ShowSuppilerAccount" ReturnType="Collection(K3CloudModel.UP_ShowSuppilerAccount_Result)">
+            <Parameter Name="supplier" Mode="In" Type="String" />
+            <Parameter Name="BDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="EDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="WhereStr" Mode="In" Type="String" />
+            <Parameter Name="strOrder" Mode="In" Type="String" />
+            <Parameter Name="strOrderType" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="UP_ShowOrder_Result">
+          <Property Type="Int64" Name="RowNo" Nullable="true" />
+          <Property Type="Int64" Name="RowCnt" Nullable="true" />
+          <Property Type="String" Name="单据类型" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="单据编号" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="供应商" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="单据状态" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="指定供应商" Nullable="true" MaxLength="80" />
+          <Property Type="DateTime" Name="采购日期" Nullable="false" Precision="23" />
+          <Property Type="String" Name="采购部门" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购组织" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购组" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="采购员" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="关闭状态" Nullable="true" MaxLength="3" />
+          <Property Type="String" Name="供货方" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="结算方" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="收款方" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="创建人" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="创建时间" Nullable="false" Precision="23" />
+          <Property Type="String" Name="审核人" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="审核时间" Nullable="true" Precision="23" />
+          <Property Type="String" Name="物料名称" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="物料编码" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="物料说明" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="计量单位" Nullable="true" MaxLength="80" />
+          <Property Type="Decimal" Name="数量" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="String" Name="交货地点" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="交货日期" Nullable="true" Precision="23" />
+          <Property Type="String" Name="是否赠品" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="业务关闭" Nullable="true" MaxLength="8" />
+          <Property Type="Decimal" Name="单价" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="含税单价" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="金额" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Int32" Name="税组合" Nullable="true" />
+          <Property Type="Decimal" Name="价税合计" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="String" Name="税率名称" Nullable="true" MaxLength="80" />
+          <Property Type="Decimal" Name="税额" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="计入成本金额" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="String" Name="增值税" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="卖方代扣代缴" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="买方代扣代缴" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="付款条件" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="折扣率_" Nullable="true" Precision="19" Scale="6" />
+          <Property Type="Decimal" Name="税率_" Nullable="true" Precision="19" Scale="6" />
+          <Property Type="Decimal" Name="税务_税率_" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="计入成本比例_" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Int32" Name="FSUPPLIERID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UP_ShowStockIn_Result">
+          <Property Type="Int64" Name="RowNo" Nullable="true" />
+          <Property Type="Int64" Name="RowCnt" Nullable="true" />
+          <Property Type="String" Name="单据类型" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="单据编号" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="入库日期" Nullable="false" Precision="23" />
+          <Property Type="String" Name="供应商" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="单据状态" Nullable="false" MaxLength="4" />
+          <Property Type="Int32" Name="批号" Nullable="true" />
+          <Property Type="String" Name="物料编号" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="物料名称" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="单位" Nullable="true" MaxLength="80" />
+          <Property Type="Decimal" Name="实收数量" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="应收数量" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="单价" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="含税单价" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="金额" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="价税合计" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="税率_" Nullable="true" Precision="19" Scale="6" />
+          <Property Type="Decimal" Name="税额" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="String" Name="仓库" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="是否赠品" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="库存状态" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="备注" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="金额_本位币_" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="成本价" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="总成本" Nullable="true" Precision="23" Scale="10" />
+          <Property Type="String" Name="采购部门" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购组织" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购组" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="采购员" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="FSUPPLIERID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UP_ShowPaymentOrder_Result">
+          <Property Type="Int64" Name="RowNo" Nullable="true" />
+          <Property Type="Int64" Name="RowCnt" Nullable="true" />
+          <Property Type="String" Name="单据类型" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="单据编号" Nullable="false" MaxLength="30" />
+          <Property Type="DateTime" Name="业务日期" Nullable="false" Precision="23" />
+          <Property Type="String" Name="收款单位类型" Nullable="true" MaxLength="6" />
+          <Property Type="String" Name="收款单位" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="币别" Nullable="true" MaxLength="80" />
+          <Property Type="Decimal" Name="应付款" Nullable="false" Precision="23" Scale="10" />
+          <Property Type="Decimal" Name="实付款" Nullable="false" Precision="23" Scale="10" />
+          <Property Type="String" Name="付款组织" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="结算组织" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购部门" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购组织" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="采购组" Nullable="true" MaxLength="80" />
+          <Property Type="String" Name="采购员" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="FSUPPLIER" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="T_ORG_ORGANIZATIONS">
+          <Key>
+            <PropertyRef Name="FORGID" />
+          </Key>
+          <Property Name="FORGID" Type="Int32" Nullable="false" />
+          <Property Name="FNUMBER" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FORGFORMID" Type="Int32" Nullable="false" />
+          <Property Name="FCONTACT" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FTEL" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FADDRESS" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FORGFUNCTIONS" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FISACCOUNTORG" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FISBUSINESSORG" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FACCTORGTYPE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FPARENTID" Type="Int32" Nullable="false" />
+          <Property Name="FCREATORID" Type="Int32" Nullable="false" />
+          <Property Name="FCREATEDATE" Type="DateTime" Precision="3" />
+          <Property Name="FMODIFIERID" Type="Int32" Nullable="false" />
+          <Property Name="FMODIFYDATE" Type="DateTime" Precision="3" />
+          <Property Name="FFORBIDSTATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FFORBIDORID" Type="Int32" Nullable="false" />
+          <Property Name="FFORBIDDATE" Type="DateTime" Precision="3" />
+          <Property Name="FDOCUMENTSTATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FISSYSPRESET" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FAUDITORID" Type="Int32" Nullable="false" />
+          <Property Name="FAUDITDATE" Type="DateTime" Precision="3" />
+          <Property Name="FACCTGRANGEID" Type="Int32" />
+          <Property Name="FVALUATIONMETHOD" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FACCTGORGID" Type="Int32" />
+          <Property Name="FACCTGSYSTEMID" Type="Int32" />
+          <Property Name="FDIVIDEDBASIS" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FACCTPOLICYID" Type="Int32" />
+          <Property Name="FPOSTCODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FPOINTSRATE" Type="Decimal" Nullable="false" Precision="23" Scale="10" />
+        </EntityType>
+        <EntityType Name="T_ORG_ORGANIZATIONS_L">
+          <Key>
+            <PropertyRef Name="FPKID" />
+          </Key>
+          <Property Name="FPKID" Type="Int32" Nullable="false" />
+          <Property Name="FORGID" Type="Int32" Nullable="false" />
+          <Property Name="FLOCALEID" Type="Int32" Nullable="false" />
+          <Property Name="FNAME" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FDESCRIPTION" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FADDRESS" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="UP_ShowSuppilerAccount_Result">
+          <Property Type="Int64" Name="供应商编号" Nullable="true" />
+          <Property Type="String" Name="供应商名称" Nullable="true" />
+          <Property Type="DateTime" Name="日期" Nullable="true" Precision="23" />
+          <Property Type="String" Name="入库单编号" Nullable="true" />
+          <Property Type="Decimal" Name="入库单金额" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="付款单编号" Nullable="true" />
+          <Property Type="Decimal" Name="付款单金额" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int64" Name="RowNo" Nullable="true" />
+          <Property Type="Int64" Name="RowCnt" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="UP_ShowSuppilerAccount1_Result">
+          <Property Type="Int64" Name="RowNo" Nullable="true" />
+          <Property Type="Int64" Name="RowCnt" Nullable="true" />
+          <Property Type="Int64" Name="供应商编号" Nullable="true" />
+          <Property Type="String" Name="供应商名称" Nullable="true" />
+          <Property Type="DateTime" Name="日期" Nullable="true" Precision="23" />
+          <Property Type="String" Name="入库单编号" Nullable="true" />
+          <Property Type="Decimal" Name="入库单金额" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="付款单编号" Nullable="true" />
+          <Property Type="Decimal" Name="付款单金额" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -200,6 +479,181 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UP_ShowOrder" FunctionName="K3CloudModel.Store.UP_ShowOrder" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="K3CloudModel.UP_ShowOrder_Result">
+                <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+                <ScalarProperty Name="RowCnt" ColumnName="RowCnt" />
+                <ScalarProperty Name="单据类型" ColumnName="单据类型" />
+                <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+                <ScalarProperty Name="供应商" ColumnName="供应商" />
+                <ScalarProperty Name="单据状态" ColumnName="单据状态" />
+                <ScalarProperty Name="指定供应商" ColumnName="指定供应商" />
+                <ScalarProperty Name="采购日期" ColumnName="采购日期" />
+                <ScalarProperty Name="采购部门" ColumnName="采购部门" />
+                <ScalarProperty Name="采购组织" ColumnName="采购组织" />
+                <ScalarProperty Name="采购组" ColumnName="采购组" />
+                <ScalarProperty Name="采购员" ColumnName="采购员" />
+                <ScalarProperty Name="关闭状态" ColumnName="关闭状态" />
+                <ScalarProperty Name="供货方" ColumnName="供货方" />
+                <ScalarProperty Name="结算方" ColumnName="结算方" />
+                <ScalarProperty Name="收款方" ColumnName="收款方" />
+                <ScalarProperty Name="创建人" ColumnName="创建人" />
+                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
+                <ScalarProperty Name="审核人" ColumnName="审核人" />
+                <ScalarProperty Name="审核时间" ColumnName="审核时间" />
+                <ScalarProperty Name="物料名称" ColumnName="物料名称" />
+                <ScalarProperty Name="物料编码" ColumnName="物料编码" />
+                <ScalarProperty Name="物料说明" ColumnName="物料说明" />
+                <ScalarProperty Name="计量单位" ColumnName="计量单位" />
+                <ScalarProperty Name="数量" ColumnName="数量" />
+                <ScalarProperty Name="交货地点" ColumnName="交货地点" />
+                <ScalarProperty Name="交货日期" ColumnName="交货日期" />
+                <ScalarProperty Name="是否赠品" ColumnName="是否赠品" />
+                <ScalarProperty Name="业务关闭" ColumnName="业务关闭" />
+                <ScalarProperty Name="单价" ColumnName="单价" />
+                <ScalarProperty Name="含税单价" ColumnName="含税单价" />
+                <ScalarProperty Name="金额" ColumnName="金额" />
+                <ScalarProperty Name="税组合" ColumnName="税组合" />
+                <ScalarProperty Name="价税合计" ColumnName="价税合计" />
+                <ScalarProperty Name="税率名称" ColumnName="税率名称" />
+                <ScalarProperty Name="税额" ColumnName="税额" />
+                <ScalarProperty Name="计入成本金额" ColumnName="计入成本金额" />
+                <ScalarProperty Name="增值税" ColumnName="增值税" />
+                <ScalarProperty Name="卖方代扣代缴" ColumnName="卖方代扣代缴" />
+                <ScalarProperty Name="买方代扣代缴" ColumnName="买方代扣代缴" />
+                <ScalarProperty Name="付款条件" ColumnName="付款条件" />
+                <ScalarProperty Name="折扣率_" ColumnName="折扣率%" />
+                <ScalarProperty Name="税率_" ColumnName="税率%" />
+                <ScalarProperty Name="税务_税率_" ColumnName="税务-税率%" />
+                <ScalarProperty Name="计入成本比例_" ColumnName="计入成本比例%" />
+                <ScalarProperty Name="FSUPPLIERID" ColumnName="FSUPPLIERID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_ShowStockIn" FunctionName="K3CloudModel.Store.UP_ShowStockIn">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="K3CloudModel.UP_ShowStockIn_Result">
+                <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+                <ScalarProperty Name="RowCnt" ColumnName="RowCnt" />
+                <ScalarProperty Name="单据类型" ColumnName="单据类型" />
+                <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+                <ScalarProperty Name="入库日期" ColumnName="入库日期" />
+                <ScalarProperty Name="供应商" ColumnName="供应商" />
+                <ScalarProperty Name="单据状态" ColumnName="单据状态" />
+                <ScalarProperty Name="批号" ColumnName="批号" />
+                <ScalarProperty Name="物料编号" ColumnName="物料编号" />
+                <ScalarProperty Name="物料名称" ColumnName="物料名称" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="实收数量" ColumnName="实收数量" />
+                <ScalarProperty Name="应收数量" ColumnName="应收数量" />
+                <ScalarProperty Name="单价" ColumnName="单价" />
+                <ScalarProperty Name="含税单价" ColumnName="含税单价" />
+                <ScalarProperty Name="金额" ColumnName="金额" />
+                <ScalarProperty Name="价税合计" ColumnName="价税合计" />
+                <ScalarProperty Name="税率_" ColumnName="税率%" />
+                <ScalarProperty Name="税额" ColumnName="税额" />
+                <ScalarProperty Name="仓库" ColumnName="仓库" />
+                <ScalarProperty Name="是否赠品" ColumnName="是否赠品" />
+                <ScalarProperty Name="库存状态" ColumnName="库存状态" />
+                <ScalarProperty Name="备注" ColumnName="备注" />
+                <ScalarProperty Name="金额_本位币_" ColumnName="金额（本位币）" />
+                <ScalarProperty Name="成本价" ColumnName="成本价" />
+                <ScalarProperty Name="总成本" ColumnName="总成本" />
+                <ScalarProperty Name="采购部门" ColumnName="采购部门" />
+                <ScalarProperty Name="采购组织" ColumnName="采购组织" />
+                <ScalarProperty Name="采购组" ColumnName="采购组" />
+                <ScalarProperty Name="采购员" ColumnName="采购员" />
+                <ScalarProperty Name="FSUPPLIERID" ColumnName="FSUPPLIERID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UP_ShowPaymentOrder" FunctionName="K3CloudModel.Store.UP_ShowPaymentOrder">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="K3CloudModel.UP_ShowPaymentOrder_Result">
+                <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+                <ScalarProperty Name="RowCnt" ColumnName="RowCnt" />
+                <ScalarProperty Name="单据类型" ColumnName="单据类型" />
+                <ScalarProperty Name="单据编号" ColumnName="单据编号" />
+                <ScalarProperty Name="业务日期" ColumnName="业务日期" />
+                <ScalarProperty Name="收款单位类型" ColumnName="收款单位类型" />
+                <ScalarProperty Name="收款单位" ColumnName="收款单位" />
+                <ScalarProperty Name="币别" ColumnName="币别" />
+                <ScalarProperty Name="应付款" ColumnName="应付款" />
+                <ScalarProperty Name="实付款" ColumnName="实付款" />
+                <ScalarProperty Name="付款组织" ColumnName="付款组织" />
+                <ScalarProperty Name="结算组织" ColumnName="结算组织" />
+                <ScalarProperty Name="采购部门" ColumnName="采购部门" />
+                <ScalarProperty Name="采购组织" ColumnName="采购组织" />
+                <ScalarProperty Name="采购组" ColumnName="采购组" />
+                <ScalarProperty Name="采购员" ColumnName="采购员" />
+                <ScalarProperty Name="FSUPPLIER" ColumnName="FSUPPLIER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="T_ORG_ORGANIZATIONS">
+            <EntityTypeMapping TypeName="K3CloudModel.T_ORG_ORGANIZATIONS">
+              <MappingFragment StoreEntitySet="T_ORG_ORGANIZATIONS">
+                <ScalarProperty Name="FPOINTSRATE" ColumnName="FPOINTSRATE" />
+                <ScalarProperty Name="FPOSTCODE" ColumnName="FPOSTCODE" />
+                <ScalarProperty Name="FACCTPOLICYID" ColumnName="FACCTPOLICYID" />
+                <ScalarProperty Name="FDIVIDEDBASIS" ColumnName="FDIVIDEDBASIS" />
+                <ScalarProperty Name="FACCTGSYSTEMID" ColumnName="FACCTGSYSTEMID" />
+                <ScalarProperty Name="FACCTGORGID" ColumnName="FACCTGORGID" />
+                <ScalarProperty Name="FVALUATIONMETHOD" ColumnName="FVALUATIONMETHOD" />
+                <ScalarProperty Name="FACCTGRANGEID" ColumnName="FACCTGRANGEID" />
+                <ScalarProperty Name="FAUDITDATE" ColumnName="FAUDITDATE" />
+                <ScalarProperty Name="FAUDITORID" ColumnName="FAUDITORID" />
+                <ScalarProperty Name="FISSYSPRESET" ColumnName="FISSYSPRESET" />
+                <ScalarProperty Name="FDOCUMENTSTATUS" ColumnName="FDOCUMENTSTATUS" />
+                <ScalarProperty Name="FFORBIDDATE" ColumnName="FFORBIDDATE" />
+                <ScalarProperty Name="FFORBIDORID" ColumnName="FFORBIDORID" />
+                <ScalarProperty Name="FFORBIDSTATUS" ColumnName="FFORBIDSTATUS" />
+                <ScalarProperty Name="FMODIFYDATE" ColumnName="FMODIFYDATE" />
+                <ScalarProperty Name="FMODIFIERID" ColumnName="FMODIFIERID" />
+                <ScalarProperty Name="FCREATEDATE" ColumnName="FCREATEDATE" />
+                <ScalarProperty Name="FCREATORID" ColumnName="FCREATORID" />
+                <ScalarProperty Name="FPARENTID" ColumnName="FPARENTID" />
+                <ScalarProperty Name="FACCTORGTYPE" ColumnName="FACCTORGTYPE" />
+                <ScalarProperty Name="FISBUSINESSORG" ColumnName="FISBUSINESSORG" />
+                <ScalarProperty Name="FISACCOUNTORG" ColumnName="FISACCOUNTORG" />
+                <ScalarProperty Name="FORGFUNCTIONS" ColumnName="FORGFUNCTIONS" />
+                <ScalarProperty Name="FADDRESS" ColumnName="FADDRESS" />
+                <ScalarProperty Name="FTEL" ColumnName="FTEL" />
+                <ScalarProperty Name="FCONTACT" ColumnName="FCONTACT" />
+                <ScalarProperty Name="FORGFORMID" ColumnName="FORGFORMID" />
+                <ScalarProperty Name="FNUMBER" ColumnName="FNUMBER" />
+                <ScalarProperty Name="FORGID" ColumnName="FORGID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_ORG_ORGANIZATIONS_L">
+            <EntityTypeMapping TypeName="K3CloudModel.T_ORG_ORGANIZATIONS_L">
+              <MappingFragment StoreEntitySet="T_ORG_ORGANIZATIONS_L">
+                <ScalarProperty Name="FADDRESS" ColumnName="FADDRESS" />
+                <ScalarProperty Name="FDESCRIPTION" ColumnName="FDESCRIPTION" />
+                <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+                <ScalarProperty Name="FLOCALEID" ColumnName="FLOCALEID" />
+                <ScalarProperty Name="FORGID" ColumnName="FORGID" />
+                <ScalarProperty Name="FPKID" ColumnName="FPKID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UP_ShowSuppilerAccount" FunctionName="K3CloudModel.Store.UP_ShowSuppilerAccount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="K3CloudModel.UP_ShowSuppilerAccount_Result">
+                <ScalarProperty Name="供应商编号" ColumnName="供应商编号" />
+                <ScalarProperty Name="供应商名称" ColumnName="供应商名称" />
+                <ScalarProperty Name="日期" ColumnName="日期" />
+                <ScalarProperty Name="入库单编号" ColumnName="入库单编号" />
+                <ScalarProperty Name="入库单金额" ColumnName="入库单金额" />
+                <ScalarProperty Name="付款单编号" ColumnName="付款单编号" />
+                <ScalarProperty Name="付款单金额" ColumnName="付款单金额" />
+                <ScalarProperty Name="RowNo" ColumnName="RowNo" />
+                <ScalarProperty Name="RowCnt" ColumnName="RowCnt" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

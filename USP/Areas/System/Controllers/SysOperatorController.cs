@@ -13,7 +13,7 @@ using USP.Service;
 
 namespace USP.Areas.System.Controllers
 {
-    [Menu(Name = "账号信息", Icon = "panel-icon glyphicon glyphicon-list")]
+    [Menu(Name = "账号信息", Icon = "panel-icon icon-lock")]
     public class SysOperatorController : SysPrivilegeController
     {
         // GET: System/SysOperator
@@ -29,7 +29,7 @@ namespace USP.Areas.System.Controllers
             this.sysCorpBll = sysCorpBll;
         }
 
-        [MenuItem(Parent = "账号信息", Name = "基本信息", Icon = "glyphicon glyphicon-bell")]
+        [MenuItem(Parent = "账号信息", Name = "基本信息", Icon = "glyphicon glyphicon-user")]
         [Privilege(Menu = "基本信息", Name = "编辑")]
         [HttpGet]
         public ActionResult Index()

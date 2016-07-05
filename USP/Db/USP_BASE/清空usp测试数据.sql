@@ -60,3 +60,6 @@ go
 
   --insert into SysRolePrivilege(Role,Privilege,Creator,Auditor) select 0,ID,0,0 from SysPrivilege
   --WHERE id NOT IN  (SELECT privilege FROM SysRolePrivilege WHERE Role=0 )
+
+ -- insert into SysRoleMenu(Role,Menu,Creator,Auditor) select 0,ID,0,0 from SysMenu
+ -- WHERE ID NOT IN (SELECT Menu FROM dbo.SysRoleMenu WHERE role=0)

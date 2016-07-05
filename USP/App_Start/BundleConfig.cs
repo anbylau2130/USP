@@ -25,7 +25,8 @@ namespace USP
                       "~/Static/Js/respond.js"));
 
             bundles.Add(new StyleBundle("~/Css").Include(
-                      "~/Static/Css/bootstrap.css",
+                      "~/Static/Css/bootstrap.min.css",
+                      "~/Static/Css/font-awesome.min.css",
                       "~/Static/Css/toastr.min.css",
                       "~/Static/Css/site.css"));
 
@@ -52,7 +53,6 @@ namespace USP
             ));
             #endregion
 
-
             #region  confirm
             bundles.Add(new StyleBundle("~/Css/confirm").Include(
               "~/Static/Css/jquery-confirm.min.css"
@@ -61,6 +61,11 @@ namespace USP
             bundles.Add(new ScriptBundle("~/Js/confirm").Include(
                             "~/Static/Js/jquery-confirm.min.js"
             ));
+            #endregion
+
+            #region fileInput
+            bundles.Add(new StyleBundle("~/Css/FileInput").Include("~/Static/Css/fileinput.min.css"));
+            bundles.Add(new ScriptBundle("~/Js/FileInput").Include("~/Static/Js/fileinput.min.js", "~/Static/Js/fileinput_locale_zh.js"));
             #endregion
         }
     }

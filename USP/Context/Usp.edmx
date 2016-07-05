@@ -812,6 +812,7 @@
           <Parameter Name="Operator" Type="bigint" Mode="In" />
           <Parameter Name="Supplier" Type="bigint" Mode="In" />
           <Parameter Name="Creator" Type="bigint" Mode="In" />
+          <Parameter Name="Organization" Type="bigint" Mode="In" />
         </Function>
         <Function Name="UP_AddOperator" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Corp" Type="bigint" Mode="In" />
@@ -1387,6 +1388,7 @@
             <Parameter Name="Operator" Mode="In" Type="Int64" />
             <Parameter Name="Supplier" Mode="In" Type="Int64" />
             <Parameter Name="Creator" Mode="In" Type="Int64" />
+            <Parameter Name="Organization" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="UP_ShowOperatorInfo" ReturnType="Collection(UspModel.UP_ShowOperatorInfo_Result)">
             <Parameter Name="Server" Mode="In" Type="String" />

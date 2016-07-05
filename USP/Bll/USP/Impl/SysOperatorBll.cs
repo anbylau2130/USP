@@ -288,8 +288,9 @@ namespace USP.Bll.Impl
             return operatorDal.EditOperator(model);
         }
 
-        public List<UP_ShowOperatorInfo_Result> GetOperatorPageData( int? pageIndex, int? pageSize,string userName, string RealName, long corp, long status,long operatorID, string strOrder="", string strOrderType="")
+        public DataGrid<UP_ShowOperatorInfo_Result> GetOperatorPageData( int? pageIndex, int? pageSize,string userName, string RealName, long corp, long status,long operatorID, string strOrder="", string strOrderType="")
         {
+            var result = new DataGrid<UP_ShowOperatorInfo_Result>();
             string strWhere = string.Empty;
             if (!string.IsNullOrWhiteSpace(userName))
             {
@@ -312,11 +313,21 @@ namespace USP.Bll.Impl
             {
                 strWhere += " and ID <> " + operatorID;
             }
-            
-            strWhere += "and [ID] not in(select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出不为系统管理员的操作员
-           
+            if (corp == 0)
+            {
+                strWhere += " and [ID] in (select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出为系统管理员的操作员
+            }
+            else
+            {
+                strWhere += " and [ID] not in (select Operator from SysRoleOperator where Role in (select [ID] from SysRole where Type=1))";//选出不为系统管理员的操作员
+            }
+            result.rows = operatorDal.GetOperatorPageData(Constants.DB_Server, Constants.DB_DataBase, Constants.DB_UID, Constants.DB_PWD, pageIndex, pageSize, strWhere, strOrder, strOrderType);
+            if (result.rows.Count > 0)
+            {
+                result.total = result.rows[0].RowCnt;
+            }
+            return result;
             //GetOperatorPageData(Constants.DB_Server, Constants.DB_DataBase, Constants.DB_UID, Constants.DB_PWD, page, rows, "", "", "");
-            return operatorDal.GetOperatorPageData(Constants.DB_Server, Constants.DB_DataBase, Constants.DB_UID, Constants.DB_PWD, pageIndex, pageSize, strWhere, strOrder, strOrderType);
         }
     }
 }

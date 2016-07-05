@@ -7,7 +7,6 @@ using USP.Utility;
 
 namespace USP.Areas.System.Controllers
 {
-    //[Menu(Name = "系统维护", Icon = "glyphicon glyphicon-cog")]
     public class ChangePasswordController : SysPrivilegeController
     {
         // GET: Operator/changePassword
@@ -20,7 +19,7 @@ namespace USP.Areas.System.Controllers
         }
 
         [HttpGet]
-        [MenuItem(Parent = "账号信息", Name = "修改密码", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "账号信息", Name = "修改密码", Icon = "icon-edit")]
         [Privilege(Menu = "修改密码", Name = "修改")]
         public ActionResult Index()
         {

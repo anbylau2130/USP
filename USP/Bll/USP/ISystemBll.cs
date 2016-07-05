@@ -14,5 +14,7 @@ namespace USP.Bll
         DataGrid<UspPrivilege> getPrivilegeGrid();
         void UpdatePrivilege();
         void UpdateMenu();
+        int AssignMenu();
+        int AssignPrivilege();
     }
 }

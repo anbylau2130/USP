@@ -21,5 +21,14 @@ namespace USP.Service.Impl
         {
             db.UP_AddPrivilege(menu, parent, name, @class, area, controller, action, parameter, url);
         }
+
+        public int AssignPrivilege()
+        {
+            StringBuilder sqlstr = new StringBuilder();
+            sqlstr.Append(
+                "  insert into SysRolePrivilege(Role, Privilege, Creator, Auditor) select 0, ID, 0, 0 from SysPrivilege ");
+            sqlstr.Append(" WHERE id NOT IN(SELECT privilege FROM SysRolePrivilege WHERE Role = 0) ");
+            return db.Database.ExecuteSqlCommand(sqlstr.ToString());
+        }
     }
 }

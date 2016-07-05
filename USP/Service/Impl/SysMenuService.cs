@@ -24,5 +24,15 @@ namespace USP.Service.Impl
         {
             db.UP_AddMenuItem(parent, name, icon, @class, area, controller, action, parameter, url);
         }
+
+
+        public int AssignMenu()
+        {
+            StringBuilder sqlstr=new    StringBuilder();
+            sqlstr.Append(" insert into SysRoleMenu(Role, Menu, Creator, Auditor) select 0, ID, 0, 0 from SysMenu ");
+            sqlstr.Append(" WHERE ID NOT IN(SELECT Menu FROM dbo.SysRoleMenu WHERE role = 0) ");
+
+            return  db.Database.ExecuteSqlCommand(sqlstr.ToString());
+        }
     }
 }

@@ -68,5 +68,15 @@ namespace USP.Bll.Impl
                 SysMenuService.addMenuItem(uspMenuItem.Parent, uspMenuItem.Name, uspMenuItem.Icon, uspMenuItem.ControllerClass, uspMenuItem.ControllerArea, uspMenuItem.ControllerName, uspMenuItem.ControllerAction, uspMenuItem.ActionParams, uspMenuItem.Url);
             }
         }
+
+        public int AssignMenu()
+        {
+           return SysMenuService.AssignMenu();
+        }
+
+        public int AssignPrivilege()
+        {
+            return sysPrivilegeService.AssignPrivilege();
+        }
     }
 }

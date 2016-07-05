@@ -27,5 +27,10 @@ namespace USP.Models.POCO
         {
             get; set;
         }
+
+        public long? Orgnization
+        {
+            get; set;
+        }
     }
 }

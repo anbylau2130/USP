@@ -53,13 +53,15 @@
                         <div class="form-group">
                             @Html.LabelFor(u => u.LogoIcon, htmlAttributes: new { @class = "col-sm-2 control-label", @for = "LogoIcon" })
                             <div class="col-sm-4">
-                                @Html.EditorFor(u => u.LogoIcon, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                                @Html.HiddenFor(u => u.LogoIcon, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+                                <input id="LogoIconfileUpload" type="file" name="LogoIconfileUpload" />
                                 @Html.ValidationMessageFor(model => model.LogoIcon, "", new { @class = "text-danger" })
                             </div>
                             @Html.LabelFor(u => u.LogoUrl, htmlAttributes: new { @class = "col-sm-2 control-label", @for = "LogoUrl" })
                             <div class="col-sm-4">
-                                @Html.EditorFor(u => u.LogoUrl, new { htmlAttributes = new { @class = "form-control", type = "text" } })
-                                @Html.ValidationMessageFor(model => model.LogoUrl, "", new { @class = "text-danger" })
+                                <input id="LogoUrlfileUpload" type="file" name="LogoUrlfileUpload" />
+                                @Html.HiddenFor(u => u.LogoUrl, new {htmlAttributes = new {@class = "form-control", type = "text"}})
+                                @Html.ValidationMessageFor(model => model.LogoUrl, "", new {@class = "text-danger"})
                             </div>
 
                         </div>
@@ -357,6 +359,8 @@
     <script type="text/javascript">
         $(function () {
             usp.init();
+            usp.corporation.editCorporation.initFileUpload('#LogoIconfileUpload', "../../System/FileUpload/Upload", '@Model.LogoIcon', "#LogoIcon");
+            usp.corporation.editCorporation.initFileUpload('#LogoUrlfileUpload', "../../System/FileUpload/Upload", '@Model.LogoUrl', "#LogoUrl");
             usp.corporation.editCorporation.init(
                 "#btnReturn", "#Province",
                 "#Area", "GetAreaDropDown",

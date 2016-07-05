@@ -13,7 +13,6 @@ using USP.Common;
 
 namespace USP.Areas.System.Controllers
 {
-    //[Menu(Name = "系统维护", Icon = "glyphicon glyphicon-cog")]
     public class BankController : SysPrivilegeController
     {
         // GET: System/Bank
@@ -25,7 +24,7 @@ namespace USP.Areas.System.Controllers
             this.SysBankBll = SysBankBll;
         }
 
-        [MenuItem(Parent = "系统维护", Name = "银行管理", Icon = "glyphicon glyphicon-info-sign")]
+        [MenuItem(Parent = "系统设置", Name = "银行管理", Icon = "glyphicon glyphicon-usd")]
         public ActionResult Index()
         {
             return View();

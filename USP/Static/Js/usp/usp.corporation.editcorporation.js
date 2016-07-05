@@ -10,6 +10,7 @@
             //usp.corporation.editCorporation.eventInit.provinceChange(provinceId, provinceUrl);
             usp.corporation.editCorporation.eventInit.provinceChange(areaId, areaUrl, provinceId, countyId);
             usp.corporation.editCorporation.eventInit.areaChange(countyId, countyUrl, areaId);
+           
         },
         eventInit: {
             btnReturnInit: function (id, basePage) {
@@ -54,6 +55,27 @@
                 });
 
             }
-        }
+        },
+        initFileUpload:function (id, uploadUrl, filename,hiddenid) {
+        $(id).fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: uploadUrl, //上传的地址
+            allowedFileExtensions: ['jpg', 'png', 'gif'], //接收的文件后缀
+            showUpload: false, //是否显示上传按钮
+            showCaption: false, //是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            initialPreview: [ //预览图片的设置
+                filename!=''? "<img src='"+filename+"' class='file-preview-image' alt='Logo' title='Logo'>":""
+            ]
+        });
+        $(id).on("fileuploaded", function (event, data, previewId, index) {
+            if (data.jqXHR.responseJSON.IsSuccess) {
+                $(hiddenid).val(data.jqXHR.responseJSON.FileName);
+            } else {
+                toastr.error(data.jqXHR.responseJSON.Msg);
+            }
+        });
+    }
     }
 })(this);

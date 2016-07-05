@@ -31,10 +31,16 @@ namespace USP.Dal.Impl
 
             var result = from x in uspdb.SysOperatorSupplier.ToList()
                          join y in db.T_BD_SUPPLIER on x.Supplier equals y.FSUPPLIERID
+                         where x.Operator==id
                          select y;
 
             return result.ToList().FirstOrDefault();
 
+        }
+
+        public List<T_BD_SUPPLIER_L> GetAllLanguage()
+        {
+            return db.T_BD_SUPPLIER_L.ToList();
         }
     }
 }

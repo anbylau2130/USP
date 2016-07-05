@@ -1016,7 +1016,7 @@ namespace USP.Context
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UP_ShowCorp_Result>("UP_ShowCorp", pageIndexParameter, pageSizeParameter, whereStrParameter, strOrderParameter, strOrderTypeParameter);
         }
     
-        public virtual ObjectResult<string> UP_AddOperaterSupplier(Nullable<long> @operator, Nullable<long> supplier, Nullable<long> creator)
+        public virtual ObjectResult<string> UP_AddOperaterSupplier(Nullable<long> @operator, Nullable<long> supplier, Nullable<long> creator, Nullable<long> organization)
         {
             var operatorParameter = @operator.HasValue ?
                 new ObjectParameter("Operator", @operator) :
@@ -1030,7 +1030,11 @@ namespace USP.Context
                 new ObjectParameter("Creator", creator) :
                 new ObjectParameter("Creator", typeof(long));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_AddOperaterSupplier", operatorParameter, supplierParameter, creatorParameter);
+            var organizationParameter = organization.HasValue ?
+                new ObjectParameter("Organization", organization) :
+                new ObjectParameter("Organization", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("UP_AddOperaterSupplier", operatorParameter, supplierParameter, creatorParameter, organizationParameter);
         }
     
         public virtual ObjectResult<UP_ShowOperatorInfo_Result> UP_ShowOperatorInfo(string server, string dataBase, string uID, string pWD, Nullable<int> pageIndex, Nullable<int> pageSize, string whereStr, string strOrder, string strOrderType)
