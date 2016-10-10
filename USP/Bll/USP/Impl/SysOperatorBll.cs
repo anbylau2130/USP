@@ -17,16 +17,16 @@ namespace USP.Bll.Impl
         ISysOperatorService sysOperatorService;
         ISysOperatorDal sysOperatorDal;
         ISysUserDal operatorDal;
-        ISupplierBll supplierBll;
+        //ISupplierBll supplierBll;
         //ISysLoginLogBll sysLoginLogBll;
         ISysLoginLogDal sysLoginLogDal;
-        public SysOperatorBll(ISupplierBll supplierBll,ISysOperatorService sysOperatorService, Dal.ISysOperatorDal sysOperatorDal, ISysUserDal sysUserDal, ISysLoginLogDal sysLoginLogDal)
+        public SysOperatorBll(/*ISupplierBll supplierBll,*/ISysOperatorService sysOperatorService, Dal.ISysOperatorDal sysOperatorDal, ISysUserDal sysUserDal, ISysLoginLogDal sysLoginLogDal)
         {
             this.sysOperatorService = sysOperatorService;
             this.sysOperatorDal = sysOperatorDal;
             this.operatorDal = sysUserDal;
             this.sysLoginLogDal = sysLoginLogDal;
-            this.supplierBll = supplierBll;
+            //this.supplierBll = supplierBll;
         }
 
         public AjaxResult Login(Login login, HttpContextBase httpContext)
@@ -43,11 +43,11 @@ namespace USP.Bll.Impl
                 user.SysOperator = operators[0];
                 user.SysCorp = sysOperatorService.GetCorp(user.SysOperator.Corp);
                 //供应商赋值
-                var supplier = supplierBll.GetSupplierByOperatorId(user.SysOperator.ID);
-                if (supplier != null)
-                {
-                    user.Supplier = supplier;
-                }
+                //var supplier = supplierBll.GetSupplierByOperatorId(user.SysOperator.ID);
+                //if (supplier != null)
+                //{
+                //    user.Supplier = supplier;
+                //}
                 if ((user.SysCorp.Status!=0))
                 {
                     result.flag = false;

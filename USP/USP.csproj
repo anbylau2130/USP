@@ -148,8 +148,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Supplier\Controllers\OrderController.cs" />
-    <Compile Include="Areas\Supplier\SupplierAreaRegistration.cs" />
     <Compile Include="Areas\System\Controllers\BankController.cs" />
     <Compile Include="Areas\System\Controllers\ChangePasswordController.cs" />
     <Compile Include="Areas\System\Controllers\CorporationController.cs" />
@@ -167,14 +165,6 @@
     <Compile Include="Areas\System\Controllers\TestController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Attributes\NoFilter.cs" />
-    <Compile Include="Bll\K3CLoud\Impl\K3CloudProcBll.cs" />
-    <Compile Include="Bll\K3CLoud\Impl\OrganizationBll.cs" />
-    <Compile Include="Bll\K3CLoud\Impl\SupplierGroupBll.cs" />
-    <Compile Include="Bll\K3CLoud\Impl\SupplierBll.cs" />
-    <Compile Include="Bll\K3CLoud\IK3CloudProcBll.cs" />
-    <Compile Include="Bll\K3CLoud\IOrganizationBll.cs" />
-    <Compile Include="Bll\K3CLoud\ISupplierBll.cs" />
-    <Compile Include="Bll\K3CLoud\ISupplierGroupBll.cs" />
     <Compile Include="Bll\USP\Impl\SysAreaBll.cs" />
     <Compile Include="Bll\USP\Impl\SysBankBll.cs" />
     <Compile Include="Bll\USP\Impl\SysCorpBll.cs" />
@@ -218,16 +208,6 @@
     <Compile Include="Common\JObjectModelBinder.cs" />
     <Compile Include="Common\JsonChecker.cs" />
     <Compile Include="Common\MVCExtensions.cs" />
-    <Compile Include="Context\K3Cloud.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>K3Cloud.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Context\K3Cloud.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>K3Cloud.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Context\Usp.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -239,14 +219,6 @@
       <DependentUpon>Usp.edmx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\OEMController.cs" />
-    <Compile Include="Dal\K3CLoud\Impl\K3CloudProcDal.cs" />
-    <Compile Include="Dal\K3CLoud\Impl\OrganizationsDal.cs" />
-    <Compile Include="Dal\K3CLoud\Impl\SupplierGroupDal.cs" />
-    <Compile Include="Dal\K3CLoud\IK3CloudProcDal.cs" />
-    <Compile Include="Dal\K3CLoud\IOrganizationsDal.cs" />
-    <Compile Include="Dal\K3CLoud\ISupplierGroupDal.cs" />
-    <Compile Include="Dal\K3CLoud\Impl\SupplierDal.cs" />
-    <Compile Include="Dal\K3CLoud\ISupplierDal.cs" />
     <Compile Include="Dal\USP\Impl\SysOperaterSupplierDal.cs" />
     <Compile Include="Dal\USP\ISysOperaterSupplierDal.cs" />
     <Compile Include="Dal\USP\Impl\SysAreaDal.cs" />
@@ -511,11 +483,6 @@
     <Compile Include="Utility\Util.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Context\K3Cloud.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>K3Cloud.edmx</DependentUpon>
-      <LastGenOutput>K3Cloud.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Db\USP_BASE\Add_FK.sql" />
     <Content Include="Db\USP_BASE\Remove_FK.sql" />
     <Content Include="Db\USP_ATTACH_PROC.sql" />
@@ -922,21 +889,7 @@
     <Content Include="Areas\System\Views\Corporation\Information.cshtml" />
     <Content Include="Areas\System\Views\SysCorpType\Index.cshtml" />
     <Content Include="Areas\System\Views\SysCorpType\Add.cshtml" />
-    <EntityDeploy Include="Context\K3Cloud.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>K3Cloud.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Context\K3Cloud.edmx.diagram">
-      <DependentUpon>K3Cloud.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\System\Views\Operator\RelationSupplier.cshtml" />
-    <Content Include="Areas\Supplier\Views\web.config" />
-    <Content Include="Areas\Supplier\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Supplier\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Supplier\Views\Order\Index.cshtml" />
-    <Content Include="Areas\Supplier\Views\Order\StockInList.cshtml" />
-    <Content Include="Areas\Supplier\Views\Order\PaymentOrderList.cshtml" />
-    <Content Include="Areas\Supplier\Views\Order\SupplierAmount.cshtml" />
     <None Include="Properties\PublishProfiles\NewU.pubxml" />
     <Content Include="Static\fonts\fontawesome-webfont.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1052,7 +1005,6 @@
     <Content Include="Template\usp.index.cst" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Supplier\Models\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="obj\" />
     <Folder Include="Views\AuthorizeTest\" />

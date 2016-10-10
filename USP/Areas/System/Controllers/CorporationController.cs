@@ -27,15 +27,15 @@ namespace USP.Areas.System.Controllers
         //ISysCorpTypeBll sysCorpTypeBll;
         IDropDownListService dropDownListService;
         ISysCorpStatusBll sysCorpStatusBll;
-        ISupplierBll supplierBll;
+        //ISupplierBll supplierBll;
 
-        public CorporationController(ISysCorpBll sysCorpBll, IDropDownListService dropDownListService, ISysCorpStatusBll sysCorpStatusBll, ISupplierBll supplierBll)
+        public CorporationController(ISysCorpBll sysCorpBll, IDropDownListService dropDownListService, ISysCorpStatusBll sysCorpStatusBll /*, ISupplierBll supplierBll*/)
         {
             this.sysCorpBll = sysCorpBll;
             //this.sysCorpTypeBll = sysCorpTypeBll;
             this.dropDownListService = dropDownListService;
             this.sysCorpStatusBll = sysCorpStatusBll;
-            this.supplierBll = supplierBll;
+            //this.supplierBll = supplierBll;
         }
 
         [MenuItem(Parent = "公司管理", Name = "公司列表", Icon = "icon-sitemap")]
@@ -61,7 +61,7 @@ namespace USP.Areas.System.Controllers
         [HttpPost]
         public ActionResult GetCorporationData()
         {
-            var temp= supplierBll.GetAll();
+           // var temp= supplierBll.GetAll();
             int page = Convert.ToInt32(Request["page"]);
             int rows = Convert.ToInt32(Request["rows"]);
             string name = Request["name"];//公司名称查询

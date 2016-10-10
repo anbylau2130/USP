@@ -18,19 +18,20 @@ namespace USP.Areas.System.Controllers
     public class OperatorController : SysPrivilegeController
     {
         ISysOperatorBll operatorBll;
-        ISupplierBll supplierBll;
-        ISupplierGroupBll supplierGroupBll;
+        //ISupplierBll supplierBll;
+        //ISupplierGroupBll supplierGroupBll;
         ISysOperaterSupplierBll sysoperatersupplier;
-         IOrganizationBll orgbll;
+         //IOrganizationBll orgbll;
        
-        public OperatorController(ISysOperatorBll operatorBll,ISupplierBll supplierBll,ISupplierGroupBll supplierGroupBll,
-            ISysOperaterSupplierBll sysoperatersupplier, IOrganizationBll orgbll)
+        public OperatorController(ISysOperatorBll operatorBll,ISysOperaterSupplierBll sysoperatersupplier)
+            //,ISupplierBll supplierBll,ISupplierGroupBll supplierGroupBll,
+             //IOrganizationBll orgbll)
         {
             this.operatorBll = operatorBll;
-            this.supplierBll = supplierBll;
-            this.supplierGroupBll = supplierGroupBll;
+            //this.supplierBll = supplierBll;
+            //this.supplierGroupBll = supplierGroupBll;
             this.sysoperatersupplier = sysoperatersupplier;
-            this.orgbll = orgbll;
+            //this.orgbll = orgbll;
         }
 
         [MenuItem(Parent = "系统设置", Name = "员工管理", Icon = "glyphicon glyphicon-user")]
@@ -53,17 +54,17 @@ namespace USP.Areas.System.Controllers
                     return GetDataGrid();//列表页数据
                 case "Combobox":
                     return GetStatusComboBox();//列表页状态combotree
-                case "orgtree":
+                //case "orgtree":
                     
-                    return GetOrganizationTree();
+                //    return GetOrganizationTree();
                 case "menutree":
                     return GetRoleTree();//加载添加管理员页面的角色tree
                 case "checkname":
                     return CheckName();
-                case "suppliertree":
-                    var org = int.Parse(Request["orgid"]);
-                    var temp = GetSupplierTreeNode(org);
-                    return Json(temp);
+                //case "suppliertree":
+                //    var org = int.Parse(Request["orgid"]);
+                //    var temp = GetSupplierTreeNode(org);
+                //    return Json(temp);
                 default:
                     return Content("");
             }
@@ -98,8 +99,8 @@ namespace USP.Areas.System.Controllers
             var operator1 = (User)HttpContext.Session[Common.Constants.USER_KEY];
             var corp = operator1.SysCorp.ID;
             var operatorID = operator1.SysOperator.ID;
-            var result = operatorBll.GetOperatorPageData( page, rows,  userName, RealName, operator1.SysCorp.ID, status, corp, operatorID.ToString());
-            //var result = operatorBll.GetOperatorGrid(page, rows, "", "", userName, RealName, -1, status, corp, operatorID);
+            //var result = operatorBll.GetOperatorPageData( page, rows,  userName, RealName, operator1.SysCorp.ID, status, corp, operatorID.ToString());
+            var result = operatorBll.GetOperatorGrid(page, rows, "", "", userName, RealName, -1, status, corp, operatorID);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -430,63 +431,63 @@ namespace USP.Areas.System.Controllers
         }
 
 
-        public List<TreeNode> GetSupplierTreeNode(int orgid)
-        {
-            List< T_BD_SUPPLIERGROUP> supplierGroups = supplierGroupBll.GetAll();
-            List<T_BD_SUPPLIERGROUP_L> supplierGroupL = supplierGroupBll.GetAllLanguage();
-            List<T_BD_SUPPLIER> supplier = supplierBll.GetAll();
-            List<T_BD_SUPPLIER_L> supplierL = supplierBll.GetAllLanguage();
+        //public List<TreeNode> GetSupplierTreeNode(int orgid)
+        //{
+        //    List< T_BD_SUPPLIERGROUP> supplierGroups = supplierGroupBll.GetAll();
+        //    List<T_BD_SUPPLIERGROUP_L> supplierGroupL = supplierGroupBll.GetAllLanguage();
+        //    List<T_BD_SUPPLIER> supplier = supplierBll.GetAll();
+        //    List<T_BD_SUPPLIER_L> supplierL = supplierBll.GetAllLanguage();
 
-           return GetSupplierGroupTreeNode(supplierGroups, supplierGroupL, supplier, supplierL, orgid);
-        }
+        //   return GetSupplierGroupTreeNode(supplierGroups, supplierGroupL, supplier, supplierL, orgid);
+        //}
 
-        public List<TreeNode> GetSupplierGroupTreeNode(List<T_BD_SUPPLIERGROUP> supplierGroups,
-            List<T_BD_SUPPLIERGROUP_L> supplierGroupL,
-            List<T_BD_SUPPLIER> supplier, List<T_BD_SUPPLIER_L> supplierL, int orgid, long pid = 0 )
-        {
-            //先取组
-            List<TreeNode> result = (from i in supplierGroups
-                                     join iL in supplierGroupL on i.FID equals iL.FID
-                                     where i.FPARENTID == pid 
-                                     select new TreeNode() { id = i.FID, text = i.FNUMBER + "(" + iL.FNAME + ")-组"+i.FID, attributes = new { type = "SupplierGroup" } }
-                                    ).ToList();
-            if (result.Count==0 )
-            {
-               return (   
-                          from i in supplier
-                          join iL in supplierL on i.FSUPPLIERID equals iL.FSUPPLIERID
-                          where i.FPRIMARYGROUP == pid && i.FDOCUMENTSTATUS == "C"&& i.FUSEORGID== orgid
-                          select new TreeNode() { id = i.FSUPPLIERID, text = i.FNUMBER+"(" +iL.FNAME +")-供应商"+i.FSUPPLIERID, attributes = new { type = "Supplier" } }
-                         ).ToList();
-            }
-            foreach (var item in result)
-            {
-                item.children = new List<TreeNode>();
-                item.children.AddRange(GetSupplierGroupTreeNode(supplierGroups, supplierGroupL, supplier, supplierL,orgid, item.id));
-            }
-            return result;
+        //public List<TreeNode> GetSupplierGroupTreeNode(List<T_BD_SUPPLIERGROUP> supplierGroups,
+        //    List<T_BD_SUPPLIERGROUP_L> supplierGroupL,
+        //    List<T_BD_SUPPLIER> supplier, List<T_BD_SUPPLIER_L> supplierL, int orgid, long pid = 0 )
+        //{
+        //    //先取组
+        //    List<TreeNode> result = (from i in supplierGroups
+        //                             join iL in supplierGroupL on i.FID equals iL.FID
+        //                             where i.FPARENTID == pid 
+        //                             select new TreeNode() { id = i.FID, text = i.FNUMBER + "(" + iL.FNAME + ")-组"+i.FID, attributes = new { type = "SupplierGroup" } }
+        //                            ).ToList();
+        //    if (result.Count==0 )
+        //    {
+        //       return (   
+        //                  from i in supplier
+        //                  join iL in supplierL on i.FSUPPLIERID equals iL.FSUPPLIERID
+        //                  where i.FPRIMARYGROUP == pid && i.FDOCUMENTSTATUS == "C"&& i.FUSEORGID== orgid
+        //                  select new TreeNode() { id = i.FSUPPLIERID, text = i.FNUMBER+"(" +iL.FNAME +")-供应商"+i.FSUPPLIERID, attributes = new { type = "Supplier" } }
+        //                 ).ToList();
+        //    }
+        //    foreach (var item in result)
+        //    {
+        //        item.children = new List<TreeNode>();
+        //        item.children.AddRange(GetSupplierGroupTreeNode(supplierGroups, supplierGroupL, supplier, supplierL,orgid, item.id));
+        //    }
+        //    return result;
 
-        }
-        private ActionResult GetOrganizationTree()
-        {
-            var org = this.orgbll.GetAll();
-            var orgL = this.orgbll.GetAllLanguage();
-            var result = (from i in org
-                          join j in orgL on i.FORGID equals j.FORGID
-                          where i.FORGID == i.FPARENTID && j.FLOCALEID == 2052
-                          select new TreeNode() { id = i.FORGID, text = i.FNUMBER + "(" + j.FNAME + ")" + i.FORGID }).ToList();
+        //}
+        //private ActionResult GetOrganizationTree()
+        //{
+        //    var org = this.orgbll.GetAll();
+        //    var orgL = this.orgbll.GetAllLanguage();
+        //    var result = (from i in org
+        //                  join j in orgL on i.FORGID equals j.FORGID
+        //                  where i.FORGID == i.FPARENTID && j.FLOCALEID == 2052
+        //                  select new TreeNode() { id = i.FORGID, text = i.FNUMBER + "(" + j.FNAME + ")" + i.FORGID }).ToList();
 
-            foreach (var item in result)
-            {
-                var node = GetOrganizationTreeNode(int.Parse(item.id.ToString()), org, orgL);
-                if (node != null)
-                {
-                    item.children = new List<TreeNode>();
-                    item.children.AddRange(node);
-                }
-            }
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
+        //    foreach (var item in result)
+        //    {
+        //        var node = GetOrganizationTreeNode(int.Parse(item.id.ToString()), org, orgL);
+        //        if (node != null)
+        //        {
+        //            item.children = new List<TreeNode>();
+        //            item.children.AddRange(node);
+        //        }
+        //    }
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
 
         private List<TreeNode> GetOrganizationTreeNode(int orgid, List<T_ORG_ORGANIZATIONS> org, List<T_ORG_ORGANIZATIONS_L> orgL)
         {
